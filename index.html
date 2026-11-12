@@ -791,17 +791,24 @@ function notify(message) {
   }, 2800);
 }
 
+
 function showHome() {
-  ["homePage","authPage","appPage"].forEach(id => {
-    document.getElementById(id).classList.add("hidden");
+  const homePage = document.getElementById("homePage");
+  const loginPage = document.getElementById("loginPage");
+  const dashboardPage = document.getElementById("dashboardPage");
+  const topLinks = document.getElementById("topLinks");
+
+  homePage.classList.remove("hidden");
+  loginPage.classList.add("hidden");
+  dashboardPage.classList.add("hidden");
+  topLinks.classList.remove("hidden");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
-
-  document.getElementById("homePage").classList.remove("hidden");
-  document.getElementById("publicHeader").classList.remove("hidden");
-  document.getElementById("publicFooter").classList.remove("hidden");
-
-  history.replaceState(null, "", location.pathname);
 }
+
 
 function showLogin(role) {
   authRole = role;
