@@ -5,133 +5,612 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PopUpHub | Business Space Management</title>
+
 <style>
-:root{
-  --blue:#dceaf7;--lavender:#e8dff5;--mint:#dcefe5;
-  --peach:#f8e3d9;--yellow:#f8efcf;--pink:#f4dde5;
-  --primary:#7894b0;--primary-dark:#607f9c;
-  --dark:#40566d;--muted:#8492a3;--bg:#f6f8fb;
-  --white:#fff;--border:#e8edf2;
+:root {
+  --blue:#dceaf7;
+  --lavender:#e8dff5;
+  --mint:#dcefe5;
+  --peach:#f8e3d9;
+  --yellow:#f8efcf;
+  --pink:#f4dde5;
+  --primary:#7894b0;
+  --primary-dark:#607f9c;
+  --dark:#40566d;
+  --muted:#8492a3;
+  --bg:#f6f8fb;
+  --white:#fff;
+  --border:#e8edf2;
   --shadow:0 8px 25px rgba(65,85,110,.07);
 }
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--dark);min-height:100vh}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-.topbar{height:72px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:10}
-.brand{display:flex;align-items:center;gap:10px;font-size:22px;font-weight:800;color:var(--primary-dark);letter-spacing:-.5px}
-.brand-icon{width:39px;height:39px;background:var(--blue);border-radius:12px;display:grid;place-items:center;font-size:21px}
-.top-links{display:flex;align-items:center;gap:23px}
-.top-links button{border:0;background:none;color:#66778a;font-weight:600}
-.top-links button:hover{color:var(--primary-dark)}
-.primary-btn{border:0;background:var(--primary);color:white;padding:12px 20px;border-radius:10px;font-weight:700;transition:.2s}
-.primary-btn:hover{background:var(--primary-dark);transform:translateY(-1px)}
-.secondary-btn{border:1px solid #dce4ed;background:white;color:var(--dark);padding:11px 18px;border-radius:10px;font-weight:600}
-.hero{max-width:1200px;margin:auto;padding:85px 25px 65px;display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}
-.eyebrow{display:inline-block;background:var(--mint);color:#57816c;padding:8px 14px;border-radius:30px;font-size:11px;font-weight:800;letter-spacing:1px;margin-bottom:22px}
-.hero h1{font-size:clamp(38px,5vw,59px);line-height:1.12;letter-spacing:-2px;margin-bottom:20px;color:var(--dark)}
-.hero h1 span{color:#829bb5}
-.hero p{color:var(--muted);font-size:15px;line-height:1.8;max-width:520px;margin-bottom:27px}
-.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-.hero-visual{background:var(--lavender);border-radius:28px;min-height:350px;padding:28px;display:grid;place-items:center}
-.preview-card{background:white;border-radius:19px;width:100%;max-width:340px;padding:24px;box-shadow:var(--shadow)}
-.preview-card h3{margin-bottom:18px;color:#526b83}
-.preview-booths{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.booth{height:62px;border-radius:11px;display:grid;place-items:center;font-size:12px;font-weight:800;color:#61758b}
-.b1{background:var(--blue)}.b2{background:var(--mint)}.b3{background:var(--peach)}
-.b4{background:var(--yellow)}.b5{background:var(--pink)}.b6{background:var(--lavender)}
-.preview-label{margin-top:16px;color:#8996a4;font-size:12px}
-.section{max-width:1150px;margin:auto;padding:30px 25px 75px}
-.section-heading{text-align:center;margin-bottom:32px}
-.section-heading h2{color:#50677f;font-size:29px;margin-bottom:9px}
-.section-heading p{color:var(--muted)}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:19px}
-.feature-card{background:white;border:1px solid var(--border);border-radius:17px;padding:24px;box-shadow:var(--shadow)}
-.feature-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:13px;font-size:21px;margin-bottom:16px}
-.feature-card h3{color:#526b83;font-size:16px;margin-bottom:9px}
-.feature-card p{color:var(--muted);font-size:13px;line-height:1.7}
-footer{padding:24px;background:white;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:12px}
-.auth-wrapper{min-height:calc(100vh - 72px);display:flex;justify-content:center;align-items:center;padding:35px 18px}
-.auth-card{width:100%;max-width:440px;background:white;border:1px solid var(--border);border-radius:21px;padding:34px;box-shadow:var(--shadow)}
-.auth-card h2{font-size:26px;color:#50677f;margin-bottom:8px}
-.auth-subtitle{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:24px}
-.form-group{margin-bottom:16px}
-.form-group label{display:block;font-size:12px;font-weight:700;margin-bottom:7px;color:#596d82}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 13px;border:1px solid #e0e7ee;border-radius:9px;outline:none;background:#fcfdff;color:var(--dark)}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#91abc5;box-shadow:0 0 0 3px #dceaf755}
-.form-group textarea{min-height:90px;resize:vertical}
-.full-btn{width:100%;margin-top:5px}
-.auth-switch{text-align:center;margin-top:20px;color:var(--muted);font-size:13px}
-.text-btn{background:none;border:0;color:#6685a5;font-weight:800}
-.back-link{display:block;text-align:center;margin-top:19px;color:#71869a;font-size:13px;cursor:pointer}
-.message{font-size:12px;margin:12px 0;line-height:1.5;color:#b45f5f}
-.note{background:#f2f6fa;padding:12px;border-radius:9px;font-size:12px;color:#71869a;line-height:1.6;margin-bottom:17px}
-.dashboard{min-height:calc(100vh - 72px);display:grid;grid-template-columns:235px minmax(0,1fr)}
-.sidebar{background:white;border-right:1px solid var(--border);padding:22px 14px}
-.sidebar-brand{font-size:16px;font-weight:800;color:var(--primary-dark);padding:9px 11px 23px}
-.nav-label{font-size:10px;font-weight:800;color:#a1adba;letter-spacing:1px;padding:14px 11px 8px}
-.nav-btn{width:100%;text-align:left;padding:12px 13px;border:0;border-radius:10px;background:transparent;color:#718195;font-size:13px;font-weight:600;margin-bottom:4px}
-.nav-btn:hover,.nav-btn.active{background:var(--blue);color:#536e89}
-.main-content{padding:32px;min-width:0}
-.page-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:25px}
-.page-heading h1{font-size:26px;color:#50677f;margin-bottom:6px}
-.page-heading p{font-size:13px;color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.stat-card{background:white;border:1px solid var(--border);border-radius:15px;padding:19px;box-shadow:var(--shadow)}
-.stat-icon{width:39px;height:39px;border-radius:11px;display:grid;place-items:center;font-size:19px;margin-bottom:14px}
-.stat-card span{font-size:11px;color:var(--muted)}
-.stat-card h2{font-size:25px;color:#50677f;margin-top:6px}
-.panel{background:white;border:1px solid var(--border);border-radius:15px;padding:22px;margin-top:20px;box-shadow:var(--shadow)}
-.panel h3{font-size:16px;color:#526b83;margin-bottom:15px}
-.table-wrap{width:100%;overflow-x:auto}
-.data-table{width:100%;border-collapse:collapse;min-width:570px}
-.data-table th,.data-table td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--border);font-size:12px}
-.data-table th{color:#8996a4;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
-.data-table td{color:#586d82}
-.pill{display:inline-block;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700}
-.pill-open{background:var(--mint);color:#4f8064}
-.pill-upcoming{background:var(--yellow);color:#927a3e}
-.pill-completed{background:var(--lavender);color:#77618d}
-.pill-pending{background:var(--peach);color:#9b705b}
-.pill-approved{background:var(--mint);color:#4f8064}
-.pill-rejected{background:var(--pink);color:#9b6375}
-.action-btn{border:0;border-radius:7px;padding:7px 10px;font-size:11px;font-weight:700;margin:2px}
-.edit-btn{background:var(--blue);color:#536e89}
-.delete-btn{background:var(--pink);color:#9b6375}
-.empty{text-align:center;padding:35px 15px;color:var(--muted);font-size:13px;line-height:1.8}
-.empty strong{display:block;color:#647b91;margin-bottom:5px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.form-grid .wide{grid-column:1/-1}
-.form-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
-.info-card{padding:17px;border-radius:12px;background:#f7f9fc;border:1px solid var(--border);margin-bottom:12px}
-.info-card strong{color:#526b83;font-size:13px}
-.info-card p{font-size:12px;color:var(--muted);line-height:1.6;margin-top:5px}
-.toast{position:fixed;bottom:22px;right:22px;background:#526f89;color:white;padding:13px 18px;border-radius:10px;box-shadow:var(--shadow);z-index:50;font-size:13px;max-width:calc(100% - 44px)}
-@media(max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:800px){
- .hero{grid-template-columns:1fr;padding:55px 20px;gap:30px}
- .features{grid-template-columns:1fr 1fr}
- .dashboard{grid-template-columns:1fr}
- .sidebar{display:flex;gap:4px;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid var(--border)}
- .sidebar-brand,.nav-label{display:none}
- .nav-btn{white-space:nowrap;width:auto;margin:0}
- .main-content{padding:23px 17px}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--dark);
+  min-height:100vh;
 }
-@media(max-width:550px){
- .topbar{height:65px;padding:0 15px}.brand{font-size:19px}
- .top-links{gap:12px}.top-links button:not(.primary-btn){display:none}
- .hero h1{font-size:39px}.features{grid-template-columns:1fr}
- .auth-card{padding:25px 20px}.form-grid{grid-template-columns:1fr}
- .form-grid .wide{grid-column:auto}
- .stats{gap:9px}.stat-card{padding:14px}.stat-card h2{font-size:22px}
+
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+.hidden { display:none!important; }
+
+.topbar {
+  height:72px;
+  background:white;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 6%;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.brand {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:22px;
+  font-weight:800;
+  color:var(--primary-dark);
+}
+
+.brand-icon {
+  width:39px;
+  height:39px;
+  background:var(--blue);
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:21px;
+}
+
+.top-links {
+  display:flex;
+  align-items:center;
+  gap:23px;
+}
+
+.top-links button:not(.primary-btn) {
+  border:0;
+  background:none;
+  color:#66778a;
+  font-weight:600;
+}
+
+.top-links button:hover { color:var(--primary-dark); }
+
+.primary-btn {
+  border:0;
+  background:var(--primary);
+  color:white;
+  padding:12px 20px;
+  border-radius:10px;
+  font-weight:700;
+  transition:.2s;
+}
+
+.primary-btn:hover {
+  background:var(--primary-dark);
+  transform:translateY(-1px);
+}
+
+.secondary-btn {
+  border:1px solid #dce4ed;
+  background:white;
+  color:var(--dark);
+  padding:11px 18px;
+  border-radius:10px;
+  font-weight:600;
+}
+
+.hero {
+  max-width:1200px;
+  margin:auto;
+  padding:85px 25px 65px;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:55px;
+  align-items:center;
+}
+
+.eyebrow {
+  display:inline-block;
+  background:var(--mint);
+  color:#57816c;
+  padding:8px 14px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:22px;
+}
+
+.hero h1 {
+  font-size:clamp(38px,5vw,59px);
+  line-height:1.12;
+  letter-spacing:-2px;
+  margin-bottom:20px;
+  color:var(--dark);
+}
+
+.hero h1 span { color:#829bb5; }
+
+.hero p {
+  color:var(--muted);
+  font-size:15px;
+  line-height:1.8;
+  max-width:520px;
+  margin-bottom:27px;
+}
+
+.hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
+
+.hero-visual {
+  background:var(--lavender);
+  border-radius:28px;
+  min-height:350px;
+  padding:28px;
+  display:grid;
+  place-items:center;
+}
+
+.preview-card {
+  background:white;
+  border-radius:19px;
+  width:100%;
+  max-width:340px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.preview-card h3 { margin-bottom:18px; color:#526b83; }
+
+.preview-booths {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.booth {
+  height:62px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  font-weight:800;
+  color:#61758b;
+}
+
+.b1 { background:var(--blue); }
+.b2 { background:var(--mint); }
+.b3 { background:var(--peach); }
+.b4 { background:var(--yellow); }
+.b5 { background:var(--pink); }
+.b6 { background:var(--lavender); }
+
+.preview-label {
+  margin-top:16px;
+  color:#8996a4;
+  font-size:12px;
+}
+
+.section {
+  max-width:1150px;
+  margin:auto;
+  padding:30px 25px 75px;
+}
+
+.section-heading { text-align:center; margin-bottom:32px; }
+
+.section-heading h2 {
+  color:#50677f;
+  font-size:29px;
+  margin-bottom:9px;
+}
+
+.section-heading p { color:var(--muted); }
+
+.features {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:19px;
+}
+
+.feature-card {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:24px;
+  box-shadow:var(--shadow);
+}
+
+.feature-icon {
+  width:46px;
+  height:46px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  font-size:21px;
+  margin-bottom:16px;
+}
+
+.feature-card h3 {
+  color:#526b83;
+  font-size:16px;
+  margin-bottom:9px;
+}
+
+.feature-card p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+footer {
+  padding:24px;
+  background:white;
+  border-top:1px solid var(--border);
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.auth-wrapper {
+  min-height:calc(100vh - 72px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:35px 18px;
+}
+
+.auth-card {
+  width:100%;
+  max-width:440px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:21px;
+  padding:34px;
+  box-shadow:var(--shadow);
+}
+
+.auth-card h2 {
+  font-size:26px;
+  color:#50677f;
+  margin-bottom:8px;
+}
+
+.auth-subtitle {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+  margin-bottom:24px;
+}
+
+.form-group { margin-bottom:16px; }
+
+.form-group label {
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:7px;
+  color:#596d82;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width:100%;
+  padding:12px 13px;
+  border:1px solid #e0e7ee;
+  border-radius:9px;
+  outline:none;
+  background:#fcfdff;
+  color:var(--dark);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color:#91abc5;
+  box-shadow:0 0 0 3px #dceaf755;
+}
+
+.form-group textarea { min-height:90px; resize:vertical; }
+
+.full-btn { width:100%; margin-top:5px; }
+
+.auth-switch {
+  text-align:center;
+  margin-top:20px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.text-btn {
+  background:none;
+  border:0;
+  color:#6685a5;
+  font-weight:800;
+}
+
+.back-link {
+  display:block;
+  text-align:center;
+  margin-top:19px;
+  color:#71869a;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.message {
+  font-size:12px;
+  margin:12px 0;
+  line-height:1.5;
+  color:#b45f5f;
+}
+
+.note {
+  background:#f2f6fa;
+  padding:12px;
+  border-radius:9px;
+  font-size:12px;
+  color:#71869a;
+  line-height:1.6;
+  margin-bottom:17px;
+}
+
+.dashboard {
+  min-height:calc(100vh - 72px);
+  display:grid;
+  grid-template-columns:235px minmax(0,1fr);
+}
+
+.sidebar {
+  background:white;
+  border-right:1px solid var(--border);
+  padding:22px 14px;
+}
+
+.sidebar-brand {
+  font-size:16px;
+  font-weight:800;
+  color:var(--primary-dark);
+  padding:9px 11px 23px;
+}
+
+.nav-label {
+  font-size:10px;
+  font-weight:800;
+  color:#a1adba;
+  letter-spacing:1px;
+  padding:14px 11px 8px;
+}
+
+.nav-btn {
+  width:100%;
+  text-align:left;
+  padding:12px 13px;
+  border:0;
+  border-radius:10px;
+  background:transparent;
+  color:#718195;
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:4px;
+}
+
+.nav-btn:hover,.nav-btn.active {
+  background:var(--blue);
+  color:#536e89;
+}
+
+.main-content { padding:32px; min-width:0; }
+
+.page-heading {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.page-heading h1 {
+  font-size:26px;
+  color:#50677f;
+  margin-bottom:6px;
+}
+
+.page-heading p { font-size:13px; color:var(--muted); }
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+}
+
+.stat-card {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:19px;
+  box-shadow:var(--shadow);
+}
+
+.stat-icon {
+  width:39px;
+  height:39px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  font-size:19px;
+  margin-bottom:14px;
+}
+
+.stat-card span { font-size:11px; color:var(--muted); }
+.stat-card h2 { font-size:25px; color:#50677f; margin-top:6px; }
+
+.panel {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:22px;
+  margin-top:20px;
+  box-shadow:var(--shadow);
+}
+
+.panel h3 { font-size:16px; color:#526b83; margin-bottom:15px; }
+
+.table-wrap { width:100%; overflow-x:auto; }
+
+.data-table {
+  width:100%;
+  border-collapse:collapse;
+  min-width:570px;
+}
+
+.data-table th,.data-table td {
+  text-align:left;
+  padding:13px 10px;
+  border-bottom:1px solid var(--border);
+  font-size:12px;
+}
+
+.data-table th {
+  color:#8996a4;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.data-table td { color:#586d82; }
+
+.pill {
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:10px;
+  font-weight:700;
+}
+
+.pill-open,.pill-approved,.pill-paid { background:var(--mint); color:#4f8064; }
+.pill-completed { background:var(--lavender); color:#77618d; }
+.pill-pending { background:var(--peach); color:#9b705b; }
+.pill-rejected { background:var(--pink); color:#9b6375; }
+
+.action-btn {
+  border:0;
+  border-radius:7px;
+  padding:7px 10px;
+  font-size:11px;
+  font-weight:700;
+  margin:2px;
+}
+
+.edit-btn { background:var(--blue); color:#536e89; }
+.delete-btn { background:var(--pink); color:#9b6375; }
+
+.empty {
+  text-align:center;
+  padding:35px 15px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.8;
+}
+
+.empty strong { display:block; color:#647b91; margin-bottom:5px; }
+
+.form-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.form-grid .wide { grid-column:1/-1; }
+
+.form-actions {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+
+.info-card {
+  padding:17px;
+  border-radius:12px;
+  background:#f7f9fc;
+  border:1px solid var(--border);
+  margin-bottom:12px;
+}
+
+.info-card strong { color:#526b83; font-size:13px; }
+.info-card p { font-size:12px; color:var(--muted); line-height:1.6; margin-top:5px; }
+
+.toast {
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  background:#526f89;
+  color:white;
+  padding:13px 18px;
+  border-radius:10px;
+  box-shadow:var(--shadow);
+  z-index:50;
+  font-size:13px;
+  max-width:calc(100% - 44px);
+}
+
+@media(max-width:1000px) {
+  .stats { grid-template-columns:repeat(2,1fr); }
+}
+
+@media(max-width:800px) {
+  .hero { grid-template-columns:1fr; padding:55px 20px; gap:30px; }
+  .features { grid-template-columns:1fr 1fr; }
+  .dashboard { grid-template-columns:1fr; }
+  .sidebar {
+    display:flex;
+    gap:4px;
+    overflow-x:auto;
+    padding:10px;
+    border-right:0;
+    border-bottom:1px solid var(--border);
+  }
+  .sidebar-brand,.nav-label { display:none; }
+  .nav-btn { white-space:nowrap; width:auto; margin:0; }
+  .main-content { padding:23px 17px; }
+}
+
+@media(max-width:550px) {
+  .topbar { height:65px; padding:0 15px; }
+  .brand { font-size:19px; }
+  .top-links { gap:12px; }
+  .top-links button:not(.primary-btn) { display:none; }
+  .hero h1 { font-size:39px; }
+  .features { grid-template-columns:1fr; }
+  .auth-card { padding:25px 20px; }
+  .form-grid { grid-template-columns:1fr; }
+  .form-grid .wide { grid-column:auto; }
+  .stats { gap:9px; }
+  .stat-card { padding:14px; }
+  .stat-card h2 { font-size:22px; }
 }
 </style>
 </head>
+
 <body>
 
 <header class="topbar" id="publicHeader">
-  <div class="brand"><div class="brand-icon">🏪</div>PopUpHub</div>
+  <div class="brand">
+    <div class="brand-icon">🏪</div>
+    PopUpHub
+  </div>
+
   <nav class="top-links">
     <button onclick="showHome()">Home</button>
     <button onclick="showLogin('vendor')">Vendor</button>
@@ -146,31 +625,71 @@ footer{padding:24px;background:white;border-top:1px solid var(--border);text-ali
       <span class="eyebrow">POP-UP BUSINESS MANAGEMENT</span>
       <h1>Your space.<br>Your business.<br><span>Your opportunity.</span></h1>
       <p>Discover pop-up business opportunities, manage temporary spaces, and connect vendors with event organizers through one convenient platform.</p>
+
       <div class="hero-actions">
         <button class="primary-btn" onclick="showRegister()">Join as Vendor →</button>
         <button class="secondary-btn" onclick="showLogin('organizer')">Organizer Login</button>
       </div>
     </div>
+
     <div class="hero-visual">
       <div class="preview-card">
         <h3>Available Booth Spaces</h3>
         <div class="preview-booths">
-          <div class="booth b1">A-01</div><div class="booth b2">A-02</div><div class="booth b3">A-03</div>
-          <div class="booth b4">B-01</div><div class="booth b5">B-02</div><div class="booth b6">B-03</div>
+          <div class="booth b1">A-01</div>
+          <div class="booth b2">A-02</div>
+          <div class="booth b3">A-03</div>
+          <div class="booth b4">B-01</div>
+          <div class="booth b5">B-02</div>
+          <div class="booth b6">B-03</div>
         </div>
         <div class="preview-label">A simple way to organize your next event.</div>
       </div>
     </div>
   </section>
+
   <section class="section">
-    <div class="section-heading"><h2>Everything in One Place</h2><p>Tools to help organizers and vendors work together.</p></div>
+    <div class="section-heading">
+      <h2>Everything in One Place</h2>
+      <p>Tools to help organizers and vendors work together.</p>
+    </div>
+
     <div class="features">
-      <article class="feature-card"><div class="feature-icon" style="background:var(--blue)">🏪</div><h3>Vendor Management</h3><p>Create business profiles, submit applications, and monitor participation status.</p></article>
-      <article class="feature-card"><div class="feature-icon" style="background:var(--lavender)">📅</div><h3>Event Management</h3><p>Create events, configure business spaces, and publish participation requirements.</p></article>
-      <article class="feature-card"><div class="feature-icon" style="background:var(--mint)">🧩</div><h3>Booth Allocation</h3><p>Monitor available booths and manage vendor assignments.</p></article>
-      <article class="feature-card"><div class="feature-icon" style="background:var(--peach)">📋</div><h3>Application Review</h3><p>Review vendor applications and check submitted documents.</p></article>
-      <article class="feature-card"><div class="feature-icon" style="background:var(--yellow)">💳</div><h3>Payment Tracking</h3><p>Record payments and monitor outstanding balances.</p></article>
-      <article class="feature-card"><div class="feature-icon" style="background:var(--pink)">📊</div><h3>Reports & Analytics</h3><p>View event activity, vendor registrations, booth occupancy, and payment summaries.</p></article>
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--blue)">🏪</div>
+        <h3>Vendor Management</h3>
+        <p>Create business profiles, submit applications, and monitor participation status.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--lavender)">📅</div>
+        <h3>Event Management</h3>
+        <p>Create events, configure business spaces, and publish participation requirements.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--mint)">🧩</div>
+        <h3>Booth Allocation</h3>
+        <p>Monitor available booths and manage vendor assignments.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--peach)">📋</div>
+        <h3>Application Review</h3>
+        <p>Review vendor applications and check submitted documents.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--yellow)">💳</div>
+        <h3>Payment Tracking</h3>
+        <p>Record payments and monitor outstanding balances.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--pink)">📊</div>
+        <h3>Reports & Analytics</h3>
+        <p>View event activity, vendor registrations, booth occupancy, and payment summaries.</p>
+      </article>
     </div>
   </section>
 </main>
@@ -179,15 +698,35 @@ footer{padding:24px;background:white;border-top:1px solid var(--border);text-ali
   <div class="auth-card">
     <h2 id="authTitle">Welcome to PopUpHub</h2>
     <p class="auth-subtitle" id="authSubtitle">Access your account.</p>
+
     <div id="authNote" class="note hidden"></div>
+
     <form id="authForm">
-      <div id="nameField" class="form-group hidden"><label>Full Name</label><input id="authName" type="text" autocomplete="name"></div>
-      <div id="businessField" class="form-group hidden"><label>Business Name</label><input id="authBusiness" type="text" placeholder="Your business name"></div>
-      <div class="form-group"><label>Email Address</label><input id="authEmail" type="email" required autocomplete="email" placeholder="name@example.com"></div>
-      <div class="form-group"><label>Password</label><input id="authPassword" type="password" required autocomplete="current-password" placeholder="Enter your password"></div>
+      <div id="nameField" class="form-group hidden">
+        <label>Full Name</label>
+        <input id="authName" type="text" autocomplete="name">
+      </div>
+
+      <div id="businessField" class="form-group hidden">
+        <label>Business Name</label>
+        <input id="authBusiness" type="text" placeholder="Your business name">
+      </div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input id="authEmail" type="email" required autocomplete="email" placeholder="name@example.com">
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input id="authPassword" type="password" required autocomplete="current-password" placeholder="Enter your password">
+      </div>
+
       <div id="authMessage" class="message" role="alert"></div>
+
       <button id="authSubmit" class="primary-btn full-btn" type="submit">Log In</button>
     </form>
+
     <div id="authSwitch" class="auth-switch"></div>
     <div class="back-link" onclick="showHome()">← Back to Homepage</div>
   </div>
@@ -198,385 +737,1358 @@ footer{padding:24px;background:white;border-top:1px solid var(--border);text-ali
     <div class="sidebar-brand">🏪 PopUpHub</div>
     <div id="sidebarNav"></div>
   </aside>
+
   <main class="main-content" id="appContent"></main>
 </section>
 
-<footer id="publicFooter">© 2026 PopUpHub. A Pop-Up Business Space and Vendor Management System.</footer>
+<footer id="publicFooter">
+  © 2026 PopUpHub. A Pop-Up Business Space and Vendor Management System.
+</footer>
+
 <div id="toast" class="toast hidden"></div>
 
 <script>
-const KEY_USERS="popuphubUsers";
-const KEY_EVENTS="popuphubEvents";
-const KEY_SESSION="popuphubSession";
-const KEY_APPLICATIONS="popuphubApplications";
-const KEY_SPACES="popuphubSpaces";
-const KEY_PAYMENTS="popuphubPayments";
+const KEY_USERS = "popuphubUsers";
+const KEY_EVENTS = "popuphubEvents";
+const KEY_SESSION = "popuphubSession";
+const KEY_APPLICATIONS = "popuphubApplications";
+const KEY_SPACES = "popuphubSpaces";
+const KEY_PAYMENTS = "popuphubPayments";
 
-let authMode="login";
-let authRole="vendor";
-let currentUser=null;
-let currentPage="overview";
-let editingEventId=null;
+let authMode = "login";
+let authRole = "vendor";
+let currentUser = null;
 
-function read(key,fallback=[]){
-  try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}
+function read(key, fallback = []) {
+  try {
+    const data = JSON.parse(localStorage.getItem(key));
+    return data ?? fallback;
+  } catch {
+    return fallback;
+  }
 }
-function write(key,value){localStorage.setItem(key,JSON.stringify(value))}
-function escapeHTML(value){
-  return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+function write(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
 }
-function notify(message){
-  const toast=document.getElementById("toast");
-  toast.textContent=message;toast.classList.remove("hidden");
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
+}
+
+function notify(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.remove("hidden");
+
   clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>toast.classList.add("hidden"),2800);
+
+  window.toastTimer = setTimeout(() => {
+    toast.classList.add("hidden");
+  }, 2800);
 }
-function showHome(){
-  ["homePage","authPage","appPage"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+
+function showHome() {
+  ["homePage","authPage","appPage"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+
   document.getElementById("homePage").classList.remove("hidden");
   document.getElementById("publicHeader").classList.remove("hidden");
   document.getElementById("publicFooter").classList.remove("hidden");
-  history.replaceState(null,"",location.pathname);
+
+  history.replaceState(null, "", location.pathname);
 }
-function showLogin(role){
-  authRole=role;authMode="login";renderAuth();
+
+function showLogin(role) {
+  authRole = role;
+  authMode = "login";
+  renderAuth();
 }
-function showRegister(){
-  authRole="vendor";authMode="register";renderAuth();
+
+function showRegister() {
+  authRole = "vendor";
+  authMode = "register";
+  renderAuth();
 }
-function renderAuth(){
+
+function renderAuth() {
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("appPage").classList.add("hidden");
   document.getElementById("authPage").classList.remove("hidden");
+
   document.getElementById("publicHeader").classList.add("hidden");
   document.getElementById("publicFooter").classList.add("hidden");
-  const registering=authMode==="register";
-  document.getElementById("authTitle").textContent=registering?"Create Vendor Account":authRole==="vendor"?"Vendor Login":authRole==="organizer"?"Organizer Login":"System Administrator Access";
-  document.getElementById("authSubtitle").textContent=registering?"Register your business to discover and apply for available spaces.":"Enter your credentials to access your PopUpHub workspace.";
-  document.getElementById("nameField").classList.toggle("hidden",!registering);
-  document.getElementById("businessField").classList.toggle("hidden",!registering);
-  document.getElementById("authName").required=registering;
-  document.getElementById("authBusiness").required=registering;
-  document.getElementById("authSubmit").textContent=registering?"Create Vendor Account":"Log In";
-  document.getElementById("authMessage").textContent="";
-  const note=document.getElementById("authNote");
-  note.classList.toggle("hidden",registering||authRole==="vendor");
-  note.textContent=authRole==="organizer"?"Organizer accounts are created by the System Administrator.":"Private administrator access. This page is not listed on the public homepage.";
-  document.getElementById("authSwitch").innerHTML=registering?
-    'Already registered? <button class="text-btn" type="button" onclick="showLogin(\\'vendor\\')">Log In</button>':
-    authRole==="vendor"?'Don\\'t have an account? <button class="text-btn" type="button" onclick="showRegister()">Register</button>':
-    'Need help accessing your account? Contact the System Administrator.';
-  document.getElementById("authForm").onsubmit=handleAuth;
-}
-function handleAuth(e){
-  e.preventDefault();
-  const email=document.getElementById("authEmail").value.trim().toLowerCase();
-  const password=document.getElementById("authPassword").value;
-  const message=document.getElementById("authMessage");
-  message.style.color="#b45f5f";message.textContent="";
-  let users=read(KEY_USERS);
 
-  if(authMode==="register"){
-    const name=document.getElementById("authName").value.trim();
-    const business=document.getElementById("authBusiness").value.trim();
-    if(!name||!business){message.textContent="Please complete your name and business name.";return}
-    if(password.length<6){message.textContent="Password must contain at least 6 characters.";return}
-    if(users.some(u=>u.email===email)){message.textContent="An account with this email already exists.";return}
-    const user={id:"user-"+Date.now(),name,business,email,password,role:"vendor",createdAt:new Date().toISOString()};
-    users.push(user);write(KEY_USERS,users);
-    message.style.color="#4f8064";message.textContent="Registration successful! You can now log in.";
-    authMode="login";document.getElementById("authPassword").value="";renderAuth();notify("Vendor account created. Please log in.");return;
+  const registering = authMode === "register";
+
+  const titles = {
+    vendor:"Vendor Login",
+    organizer:"Organizer Login",
+    admin:"System Administrator Access"
+  };
+
+  document.getElementById("authTitle").textContent =
+    registering ? "Create Vendor Account" : titles[authRole];
+
+  document.getElementById("authSubtitle").textContent =
+    registering
+      ? "Register your business to discover and apply for available spaces."
+      : "Enter your credentials to access your PopUpHub workspace.";
+
+  document.getElementById("nameField").classList.toggle("hidden", !registering);
+  document.getElementById("businessField").classList.toggle("hidden", !registering);
+
+  document.getElementById("authName").required = registering;
+  document.getElementById("authBusiness").required = registering;
+
+  document.getElementById("authSubmit").textContent =
+    registering ? "Create Vendor Account" : "Log In";
+
+  document.getElementById("authMessage").textContent = "";
+
+  const note = document.getElementById("authNote");
+
+  note.classList.toggle("hidden", registering || authRole === "vendor");
+
+  note.textContent =
+    authRole === "organizer"
+      ? "Organizer accounts are created by the System Administrator."
+      : "Private administrator access. This page is not listed on the public homepage.";
+
+  const switchArea = document.getElementById("authSwitch");
+
+  if (registering) {
+    switchArea.innerHTML =
+      `Already registered? <button class="text-btn" type="button" onclick="showLogin('vendor')">Log In</button>`;
+  } else if (authRole === "vendor") {
+    switchArea.innerHTML =
+      `Don't have an account? <button class="text-btn" type="button" onclick="showRegister()">Register</button>`;
+  } else {
+    switchArea.textContent =
+      "Need help accessing your account? Contact the System Administrator.";
   }
 
-  const user=users.find(u=>u.email===email&&u.password===password&&u.role===authRole);
-  if(!user){message.textContent="Invalid email, password, or account type.";return}
+  document.getElementById("authForm").onsubmit = handleAuth;
+}
+
+function handleAuth(e) {
+  e.preventDefault();
+
+  const email = document.getElementById("authEmail").value.trim().toLowerCase();
+  const password = document.getElementById("authPassword").value;
+  const message = document.getElementById("authMessage");
+
+  message.style.color = "#b45f5f";
+  message.textContent = "";
+
+  let users = read(KEY_USERS);
+
+  if (authMode === "register") {
+    const name = document.getElementById("authName").value.trim();
+    const business = document.getElementById("authBusiness").value.trim();
+
+    if (!name || !business) {
+      message.textContent = "Please complete your name and business name.";
+      return;
+    }
+
+    if (password.length < 6) {
+      message.textContent = "Password must contain at least 6 characters.";
+      return;
+    }
+
+    if (users.some(u => u.email === email)) {
+      message.textContent = "An account with this email already exists.";
+      return;
+    }
+
+    const user = {
+      id:"user-" + Date.now(),
+      name,
+      business,
+      email,
+      password,
+      role:"vendor",
+      createdAt:new Date().toISOString()
+    };
+
+    users.push(user);
+    write(KEY_USERS, users);
+
+    authMode = "login";
+    renderAuth();
+
+    document.getElementById("authEmail").value = email;
+    notify("Registration successful. Please log in.");
+    return;
+  }
+
+  const user = users.find(u =>
+    u.email === email &&
+    u.password === password &&
+    u.role === authRole
+  );
+
+  if (!user) {
+    message.textContent = "Invalid email, password, or account type.";
+    return;
+  }
+
   loginUser(user);
 }
-function loginUser(user){
-  currentUser={id:user.id,name:user.name,email:user.email,role:user.role,business:user.business||""};
-  write(KEY_SESSION,currentUser);
+
+function loginUser(user) {
+  currentUser = {
+    id:user.id,
+    name:user.name,
+    email:user.email,
+    role:user.role,
+    business:user.business || "",
+    businessType:user.businessType || "",
+    description:user.description || ""
+  };
+
+  write(KEY_SESSION, currentUser);
   openApp();
 }
-function logout(){
-  localStorage.removeItem(KEY_SESSION);currentUser=null;showHome();notify("You have logged out.");
+
+function logout() {
+  localStorage.removeItem(KEY_SESSION);
+  currentUser = null;
+  showHome();
+  notify("You have logged out.");
 }
-function openApp(){
+
+function openApp() {
   document.getElementById("homePage").classList.add("hidden");
   document.getElementById("authPage").classList.add("hidden");
   document.getElementById("appPage").classList.remove("hidden");
+
   document.getElementById("publicHeader").classList.add("hidden");
   document.getElementById("publicFooter").classList.add("hidden");
-  buildNavigation();navigate("overview");
+
+  buildNavigation();
+  navigate("overview");
 }
-function buildNavigation(){
-  const menus={
-    vendor:[["WORKSPACE",["overview|Dashboard","profile|My Business Profile","events|Browse Events","applications|My Applications","payments|Payments & History"]]],
-    organizer:[["WORKSPACE",["overview|Dashboard","events|Manage Events","create-event|Create Event"]],["OPERATIONS",["requirements|Event Requirements","spaces|Business Spaces","applications|Vendor Applications","payments|Payment Records","reports|Reports"]]],
-    admin:[["ADMINISTRATION",["overview|Dashboard","accounts|User Accounts","settings|System Settings"]]]
+
+function buildNavigation() {
+  const menus = {
+    vendor:[
+      ["WORKSPACE",[
+        "overview|Dashboard",
+        "profile|My Business Profile",
+        "events|Browse Events",
+        "applications|My Applications",
+        "payments|Payments & History"
+      ]]
+    ],
+    organizer:[
+      ["WORKSPACE",[
+        "overview|Dashboard",
+        "events|Manage Events",
+        "create-event|Create Event"
+      ]],
+      ["OPERATIONS",[
+        "requirements|Event Requirements",
+        "spaces|Business Spaces",
+        "applications|Vendor Applications",
+        "payments|Payment Records",
+        "reports|Reports"
+      ]]
+    ],
+    admin:[
+      ["ADMINISTRATION",[
+        "overview|Dashboard",
+        "accounts|User Accounts",
+        "settings|System Settings"
+      ]]
+    ]
   };
-  const role=currentUser.role;
-  const host=document.getElementById("sidebarNav");
-  host.innerHTML=(menus[role]||[]).map(group=>`
+
+  const host = document.getElementById("sidebarNav");
+
+  host.innerHTML = (menus[currentUser.role] || []).map(group => `
     <div class="nav-label">${group[0]}</div>
-    ${group[1].map(item=>{
-      const [page,label]=item.split("|");
+    ${group[1].map(item => {
+      const [page,label] = item.split("|");
       return `<button class="nav-btn" data-page="${page}" onclick="navigate('${page}')">${label}</button>`;
     }).join("")}
-  `).join("")+`<div class="nav-label">ACCOUNT</div><button class="nav-btn" onclick="logout()">↪ Log Out</button>`;
+  `).join("") + `
+    <div class="nav-label">ACCOUNT</div>
+    <button class="nav-btn" onclick="logout()">↪ Log Out</button>
+  `;
 }
-function navigate(page){
-  currentPage=page;
-  document.querySelectorAll(".nav-btn[data-page]").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
-  const host=document.getElementById("appContent");
-  if(currentUser.role==="organizer")renderOrganizer(page,host);
-  else if(currentUser.role==="vendor")renderVendor(page,host);
-  else renderAdmin(page,host);
+
+function navigate(page) {
+  document.querySelectorAll(".nav-btn[data-page]").forEach(button => {
+    button.classList.toggle("active", button.dataset.page === page);
+  });
+
+  const host = document.getElementById("appContent");
+
+  if (currentUser.role === "organizer") {
+    renderOrganizer(page, host);
+  } else if (currentUser.role === "vendor") {
+    renderVendor(page, host);
+  } else {
+    renderAdmin(page, host);
+  }
 }
-function heading(title,subtitle,action=""){
-  return `<div class="page-heading"><div><h1>${title}</h1><p>${subtitle}</p></div>${action}</div>`;
+
+function heading(title, subtitle, action = "") {
+  return `
+    <div class="page-heading">
+      <div>
+        <h1>${title}</h1>
+        <p>${subtitle}</p>
+      </div>
+      ${action}
+    </div>
+  `;
 }
-function stat(label,value,icon,color){
-  return `<div class="stat-card"><div class="stat-icon" style="background:${color}">${icon}</div><span>${label}</span><h2>${value}</h2></div>`;
+
+function stat(label, value, icon, color) {
+  return `
+    <div class="stat-card">
+      <div class="stat-icon" style="background:${color}">${icon}</div>
+      <span>${label}</span>
+      <h2>${value}</h2>
+    </div>
+  `;
 }
-function pill(status){
-  const cls=status==="Open"||status==="Approved"||status==="Paid"?"pill-open":
-    status==="Completed"?"pill-completed":status==="Rejected"?"pill-rejected":"pill-pending";
+
+function pill(status) {
+  let cls = "pill-pending";
+
+  if (["Open","Approved","Paid","Available"].includes(status)) cls = "pill-open";
+  if (status === "Completed") cls = "pill-completed";
+  if (status === "Rejected") cls = "pill-rejected";
+
   return `<span class="pill ${cls}">${escapeHTML(status)}</span>`;
 }
-function empty(title,description){
-  return `<div class="empty"><strong>${title}</strong>${description}</div>`;
+
+function empty(title, description) {
+  return `
+    <div class="empty">
+      <strong>${title}</strong>
+      ${description}
+    </div>
+  `;
 }
 
-/* ORGANIZER PAGES */
-function renderOrganizer(page,host){
-  const events=read(KEY_EVENTS).filter(e=>e.organizerId===currentUser.id);
-  const apps=read(KEY_APPLICATIONS).filter(a=>a.organizerId===currentUser.id);
-  const spaces=read(KEY_SPACES).filter(s=>s.organizerId===currentUser.id);
-  const payments=read(KEY_PAYMENTS).filter(p=>p.organizerId===currentUser.id);
+/* ORGANIZER DASHBOARD */
 
-  if(page==="overview"){
-    host.innerHTML=heading("Organizer Dashboard","Welcome, "+escapeHTML(currentUser.name)+". Manage your events and vendors.")+
-      `<div class="stats">${stat("Total Events",events.length,"📅","var(--blue)")}${stat("Open Events",events.filter(e=>e.status==="Open").length,"🟢","var(--mint)")}${stat("Applications",apps.length,"📋","var(--peach)")}${stat("Business Spaces",spaces.length,"🏪","var(--lavender)")}</div>
-      <div class="panel"><h3>Recent Events</h3>${eventTable(events.slice().reverse().slice(0,5),false)}</div>
-      <div class="panel"><h3>Quick Actions</h3><button class="primary-btn" onclick="navigate('create-event')">＋ Create New Event</button> <button class="secondary-btn" onclick="navigate('spaces')">Manage Business Spaces</button></div>`;
-  }else if(page==="events"){
-    host.innerHTML=heading("Event Management","Create and manage your pop-up events.",'<button class="primary-btn" onclick="navigate(\\'create-event\\')">＋ Create Event</button>')+
+function renderOrganizer(page, host) {
+  const events = read(KEY_EVENTS).filter(e => e.organizerId === currentUser.id);
+  const apps = read(KEY_APPLICATIONS).filter(a => a.organizerId === currentUser.id);
+  const spaces = read(KEY_SPACES).filter(s => s.organizerId === currentUser.id);
+  const payments = read(KEY_PAYMENTS).filter(p => p.organizerId === currentUser.id);
+
+  if (page === "overview") {
+    host.innerHTML =
+      heading("Organizer Dashboard", "Welcome, " + escapeHTML(currentUser.name) + ". Manage your events and vendors.") +
+      `
+      <div class="stats">
+        ${stat("Total Events",events.length,"📅","var(--blue)")}
+        ${stat("Open Events",events.filter(e=>e.status==="Open").length,"🟢","var(--mint)")}
+        ${stat("Applications",apps.length,"📋","var(--peach)")}
+        ${stat("Business Spaces",spaces.length,"🏪","var(--lavender)")}
+      </div>
+
+      <div class="panel">
+        <h3>Recent Events</h3>
+        ${eventTable(events.slice().reverse().slice(0,5),false)}
+      </div>
+
+      <div class="panel">
+        <h3>Quick Actions</h3>
+        <button class="primary-btn" onclick="navigate('create-event')">＋ Create New Event</button>
+        <button class="secondary-btn" onclick="navigate('spaces')">Manage Business Spaces</button>
+      </div>`;
+  }
+
+  else if (page === "events") {
+    host.innerHTML =
+      heading(
+        "Event Management",
+        "Create and manage your pop-up events.",
+        `<button class="primary-btn" onclick="navigate('create-event')">＋ Create Event</button>`
+      ) +
       `<div class="panel"><h3>My Events (${events.length})</h3>${eventTable(events,true)}</div>`;
-  }else if(page==="create-event"){
+  }
+
+  else if (page === "create-event") {
     renderEventForm(host);
-  }else if(page==="spaces"){
+  }
+
+  else if (page === "spaces") {
     renderSpaces(host);
-  }else if(page==="requirements"){
+  }
+
+  else if (page === "requirements") {
     renderRequirements(host);
-  }else if(page==="applications"){
+  }
+
+  else if (page === "applications") {
     renderOrganizerApplications(host);
-  }else if(page==="payments"){
+  }
+
+  else if (page === "payments") {
     renderOrganizerPayments(host);
-  }else if(page==="reports"){
-    host.innerHTML=heading("Reports & Analytics","Summary of your event operations.")+
-      `<div class="stats">${stat("Events",events.length,"📅","var(--blue)")}${stat("Applications",apps.length,"📋","var(--peach)")}${stat("Spaces",spaces.length,"🏪","var(--mint)")}${stat("Payment Records",payments.length,"💳","var(--yellow)")}</div>
-      <div class="panel"><h3>Payment Summary</h3><p>Total recorded: <strong>₱${payments.reduce((n,p)=>n+Number(p.amount||0),0).toLocaleString("en-PH",{minimumFractionDigits:2})}</strong></p></div>`;
+  }
+
+  else if (page === "reports") {
+    host.innerHTML =
+      heading("Reports & Analytics","Summary of your event operations.") +
+      `
+      <div class="stats">
+        ${stat("Events",events.length,"📅","var(--blue)")}
+        ${stat("Applications",apps.length,"📋","var(--peach)")}
+        ${stat("Spaces",spaces.length,"🏪","var(--mint)")}
+        ${stat("Payment Records",payments.length,"💳","var(--yellow)")}
+      </div>
+      <div class="panel">
+        <h3>Payment Summary</h3>
+        <p>Total recorded: <strong>₱${payments.reduce((n,p)=>n+Number(p.amount||0),0).toLocaleString("en-PH",{minimumFractionDigits:2})}</strong></p>
+      </div>`;
   }
 }
-function eventTable(events,actions){
-  if(!events.length)return empty("No events yet","Create your first event to get started.");
-  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>Event</th><th>Location</th><th>Start Date</th><th>Deadline</th><th>Status</th>${actions?"<th>Actions</th>":""}</tr></thead><tbody>
-  ${events.map(e=>`<tr><td><strong>${escapeHTML(e.name)}</strong></td><td>${escapeHTML(e.location)}</td><td>${e.startDate}</td><td>${e.deadline}</td><td>${pill(e.status)}</td>${actions?`<td><button class="action-btn edit-btn" onclick="editEvent('${e.id}')">Edit</button><button class="action-btn delete-btn" onclick="deleteEvent('${e.id}')">Delete</button></td>`:""}</tr>`).join("")}
-  </tbody></table></div>`;
+
+function eventTable(events, actions) {
+  if (!events.length) {
+    return empty("No events yet","Create your first event to get started.");
+  }
+
+  return `
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Event</th>
+            <th>Location</th>
+            <th>Start Date</th>
+            <th>Deadline</th>
+            <th>Status</th>
+            ${actions ? "<th>Actions</th>" : ""}
+          </tr>
+        </thead>
+        <tbody>
+          ${events.map(e => `
+            <tr>
+              <td><strong>${escapeHTML(e.name)}</strong></td>
+              <td>${escapeHTML(e.location)}</td>
+              <td>${e.startDate}</td>
+              <td>${e.deadline}</td>
+              <td>${pill(e.status)}</td>
+              ${actions ? `
+                <td>
+                  <button class="action-btn edit-btn" onclick="editEvent('${e.id}')">Edit</button>
+                  <button class="action-btn delete-btn" onclick="deleteEvent('${e.id}')">Delete</button>
+                </td>
+              ` : ""}
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
 }
-function renderEventForm(host,event=null){
-  const editing=!!event;
-  host.innerHTML=heading(editing?"Edit Event":"Create New Event","Enter the event details and application schedule.")+
-  `<div class="panel"><form id="eventForm" class="form-grid">
-    <div class="form-group wide"><label>Event Name *</label><input id="evName" required maxlength="100" value="${escapeHTML(event?.name||"")}" placeholder="e.g. Weekend Pop-Up Market"></div>
-    <div class="form-group wide"><label>Description</label><textarea id="evDescription" placeholder="Describe your event...">${escapeHTML(event?.description||"")}</textarea></div>
-    <div class="form-group"><label>Location / Venue *</label><input id="evLocation" required value="${escapeHTML(event?.location||"")}" placeholder="Enter venue"></div>
-    <div class="form-group"><label>Event Status *</label><select id="evStatus"><option ${event?.status==="Upcoming"?"selected":""}>Upcoming</option><option ${event?.status==="Open"?"selected":""}>Open</option><option ${event?.status==="Completed"?"selected":""}>Completed</option></select></div>
-    <div class="form-group"><label>Start Date *</label><input type="date" id="evStart" required value="${event?.startDate||""}"></div>
-    <div class="form-group"><label>End Date *</label><input type="date" id="evEnd" required value="${event?.endDate||""}"></div>
-    <div class="form-group"><label>Application Deadline *</label><input type="date" id="evDeadline" required value="${event?.deadline||""}"></div>
-    <div class="form-group"><label>Operating Hours</label><input id="evHours" value="${escapeHTML(event?.hours||"")}" placeholder="8:00 AM - 8:00 PM"></div>
-    <div class="form-actions wide"><button class="primary-btn">${editing?"Save Changes":"Create Event"}</button><button type="button" class="secondary-btn" onclick="navigate('events')">Cancel</button></div>
-  </form></div>`;
-  document.getElementById("eventForm").onsubmit=e=>{
+
+function renderEventForm(host, event = null) {
+  const editing = Boolean(event);
+
+  host.innerHTML =
+    heading(editing ? "Edit Event" : "Create New Event","Enter the event details and application schedule.") +
+    `
+    <div class="panel">
+      <form id="eventForm" class="form-grid">
+
+        <div class="form-group wide">
+          <label>Event Name *</label>
+          <input id="evName" required maxlength="100" value="${escapeHTML(event?.name || "")}" placeholder="e.g. Weekend Pop-Up Market">
+        </div>
+
+        <div class="form-group wide">
+          <label>Description</label>
+          <textarea id="evDescription" placeholder="Describe your event...">${escapeHTML(event?.description || "")}</textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Location / Venue *</label>
+          <input id="evLocation" required value="${escapeHTML(event?.location || "")}" placeholder="Enter venue">
+        </div>
+
+        <div class="form-group">
+          <label>Event Status *</label>
+          <select id="evStatus">
+            <option value="Upcoming" ${event?.status==="Upcoming"?"selected":""}>Upcoming</option>
+            <option value="Open" ${event?.status==="Open"?"selected":""}>Open</option>
+            <option value="Completed" ${event?.status==="Completed"?"selected":""}>Completed</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Start Date *</label>
+          <input type="date" id="evStart" required value="${event?.startDate || ""}">
+        </div>
+
+        <div class="form-group">
+          <label>End Date *</label>
+          <input type="date" id="evEnd" required value="${event?.endDate || ""}">
+        </div>
+
+        <div class="form-group">
+          <label>Application Deadline *</label>
+          <input type="date" id="evDeadline" required value="${event?.deadline || ""}">
+        </div>
+
+        <div class="form-group">
+          <label>Operating Hours</label>
+          <input id="evHours" value="${escapeHTML(event?.hours || "")}" placeholder="8:00 AM - 8:00 PM">
+        </div>
+
+        <div class="form-actions wide">
+          <button class="primary-btn">${editing ? "Save Changes" : "Create Event"}</button>
+          <button type="button" class="secondary-btn" onclick="navigate('events')">Cancel</button>
+        </div>
+      </form>
+    </div>
+    `;
+
+  document.getElementById("eventForm").onsubmit = e => {
     e.preventDefault();
-    const start=document.getElementById("evStart").value,end=document.getElementById("evEnd").value,deadline=document.getElementById("evDeadline").value;
-    if(end<start){notify("End date cannot be before start date.");return}
-    if(deadline>start){notify("Application deadline must be on or before the start date.");return}
-    const all=read(KEY_EVENTS);
-    const data={id:event?.id||"event-"+Date.now(),organizerId:currentUser.id,name:document.getElementById("evName").value.trim(),description:document.getElementById("evDescription").value.trim(),location:document.getElementById("evLocation").value.trim(),status:document.getElementById("evStatus").value,startDate:start,endDate:end,deadline,hours:document.getElementById("evHours").value.trim()};
-    if(editing){const i=all.findIndex(x=>x.id===event.id);if(i>=0)all[i]=data}else all.push(data);
-    write(KEY_EVENTS,all);notify(editing?"Event updated.":"Event created.");navigate("events");
+
+    const start = document.getElementById("evStart").value;
+    const end = document.getElementById("evEnd").value;
+    const deadline = document.getElementById("evDeadline").value;
+
+    if (end < start) {
+      notify("End date cannot be before start date.");
+      return;
+    }
+
+    if (deadline > start) {
+      notify("Application deadline must be on or before the start date.");
+      return;
+    }
+
+    const all = read(KEY_EVENTS);
+
+    const data = {
+      id:event?.id || "event-" + Date.now(),
+      organizerId:currentUser.id,
+      name:document.getElementById("evName").value.trim(),
+      description:document.getElementById("evDescription").value.trim(),
+      location:document.getElementById("evLocation").value.trim(),
+      status:document.getElementById("evStatus").value,
+      startDate:start,
+      endDate:end,
+      deadline:deadline,
+      hours:document.getElementById("evHours").value.trim()
+    };
+
+    if (editing) {
+      const index = all.findIndex(x => x.id === event.id);
+      if (index >= 0) all[index] = data;
+    } else {
+      all.push(data);
+    }
+
+    write(KEY_EVENTS,all);
+    notify(editing ? "Event updated." : "Event created.");
+    navigate("events");
   };
 }
-function editEvent(id){
-  const event=read(KEY_EVENTS).find(e=>e.id===id&&e.organizerId===currentUser.id);
-  if(event)renderEventForm(document.getElementById("appContent"),event);
+
+function editEvent(id) {
+  const event = read(KEY_EVENTS).find(e =>
+    e.id === id && e.organizerId === currentUser.id
+  );
+
+  if (event) {
+    renderEventForm(document.getElementById("appContent"),event);
+  }
 }
-function deleteEvent(id){
-  if(!confirm("Delete this event?"))return;
-  write(KEY_EVENTS,read(KEY_EVENTS).filter(e=>!(e.id===id&&e.organizerId===currentUser.id)));
-  notify("Event deleted.");navigate("events");
+
+function deleteEvent(id) {
+  if (!confirm("Delete this event?")) return;
+
+  write(KEY_EVENTS,read(KEY_EVENTS).filter(e =>
+    !(e.id === id && e.organizerId === currentUser.id)
+  ));
+
+  notify("Event deleted.");
+  navigate("events");
 }
-function renderSpaces(host){
-  const events=read(KEY_EVENTS).filter(e=>e.organizerId===currentUser.id);
-  const spaces=read(KEY_SPACES).filter(s=>s.organizerId===currentUser.id);
-  host.innerHTML=heading("Business Spaces","Configure booth inventory for your events.")+
-  `<div class="panel"><h3>Add Business Space</h3>${events.length?`<form id="spaceForm" class="form-grid">
-    <div class="form-group"><label>Event *</label><select id="spaceEvent" required>${events.map(e=>`<option value="${e.id}">${escapeHTML(e.name)}</option>`).join("")}</select></div>
-    <div class="form-group"><label>Booth Code *</label><input id="spaceCode" required placeholder="e.g. A-01"></div>
-    <div class="form-group"><label>Size / Dimensions</label><input id="spaceSize" placeholder="e.g. 3m x 3m"></div>
-    <div class="form-group"><label>Rental Fee (₱) *</label><input id="spaceFee" type="number" min="0" required></div>
-    <div class="form-actions wide"><button class="primary-btn">Add Booth</button></div>
-  </form>`:empty("Create an event first","You need an event before adding booths.")}</div>
-  <div class="panel"><h3>Booth Inventory (${spaces.length})</h3>${spaces.length?`<div class="table-wrap"><table class="data-table"><tr><th>Event</th><th>Booth</th><th>Size</th><th>Fee</th><th>Status</th><th>Action</th></tr>${spaces.map(s=>`<tr><td>${escapeHTML(events.find(e=>e.id===s.eventId)?.name||"Event")}</td><td>${escapeHTML(s.code)}</td><td>${escapeHTML(s.size)}</td><td>₱${Number(s.fee).toLocaleString()}</td><td>${pill(s.status)}</td><td><button class="action-btn delete-btn" onclick="deleteSpace('${s.id}')">Delete</button></td></tr>`).join("")}</table></div>`:empty("No booths configured","Add business spaces to your events.")}</div>`;
-  const form=document.getElementById("spaceForm");
-  if(form)form.onsubmit=e=>{e.preventDefault();const all=read(KEY_SPACES),eventId=document.getElementById("spaceEvent").value,code=document.getElementById("spaceCode").value.trim();if(all.some(s=>s.eventId===eventId&&s.code.toLowerCase()===code.toLowerCase())){notify("That booth code already exists for this event.");return}all.push({id:"space-"+Date.now(),organizerId:currentUser.id,eventId,code,size:document.getElementById("spaceSize").value,fee:Number(document.getElementById("spaceFee").value),status:"Available"});write(KEY_SPACES,all);notify("Booth added.");navigate("spaces")};
+
+function renderSpaces(host) {
+  const events = read(KEY_EVENTS).filter(e => e.organizerId === currentUser.id);
+  const spaces = read(KEY_SPACES).filter(s => s.organizerId === currentUser.id);
+
+  host.innerHTML =
+    heading("Business Spaces","Configure booth inventory for your events.") +
+    `
+    <div class="panel">
+      <h3>Add Business Space</h3>
+
+      ${events.length ? `
+        <form id="spaceForm" class="form-grid">
+          <div class="form-group">
+            <label>Event *</label>
+            <select id="spaceEvent" required>
+              ${events.map(e => `<option value="${e.id}">${escapeHTML(e.name)}</option>`).join("")}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Booth Code *</label>
+            <input id="spaceCode" required placeholder="e.g. A-01">
+          </div>
+
+          <div class="form-group">
+            <label>Size / Dimensions</label>
+            <input id="spaceSize" placeholder="e.g. 3m x 3m">
+          </div>
+
+          <div class="form-group">
+            <label>Rental Fee (₱) *</label>
+            <input id="spaceFee" type="number" min="0" required>
+          </div>
+
+          <div class="form-actions wide">
+            <button class="primary-btn">Add Booth</button>
+          </div>
+        </form>
+      ` : empty("Create an event first","You need an event before adding booths.")}
+    </div>
+
+    <div class="panel">
+      <h3>Booth Inventory (${spaces.length})</h3>
+      ${spaces.length ? `
+        <div class="table-wrap">
+          <table class="data-table">
+            <tr><th>Event</th><th>Booth</th><th>Size</th><th>Fee</th><th>Status</th><th>Action</th></tr>
+            ${spaces.map(s => `
+              <tr>
+                <td>${escapeHTML(events.find(e=>e.id===s.eventId)?.name || "Event")}</td>
+                <td>${escapeHTML(s.code)}</td>
+                <td>${escapeHTML(s.size)}</td>
+                <td>₱${Number(s.fee).toLocaleString()}</td>
+                <td>${pill(s.status)}</td>
+                <td><button class="action-btn delete-btn" onclick="deleteSpace('${s.id}')">Delete</button></td>
+              </tr>
+            `).join("")}
+          </table>
+        </div>
+      ` : empty("No booths configured","Add business spaces to your events.")}
+    </div>
+    `;
+
+  const form = document.getElementById("spaceForm");
+
+  if (form) {
+    form.onsubmit = e => {
+      e.preventDefault();
+
+      const all = read(KEY_SPACES);
+      const eventId = document.getElementById("spaceEvent").value;
+      const code = document.getElementById("spaceCode").value.trim();
+
+      if (all.some(s =>
+        s.eventId === eventId &&
+        s.code.toLowerCase() === code.toLowerCase()
+      )) {
+        notify("That booth code already exists for this event.");
+        return;
+      }
+
+      all.push({
+        id:"space-" + Date.now(),
+        organizerId:currentUser.id,
+        eventId,
+        code,
+        size:document.getElementById("spaceSize").value,
+        fee:Number(document.getElementById("spaceFee").value),
+        status:"Available"
+      });
+
+      write(KEY_SPACES,all);
+      notify("Booth added.");
+      navigate("spaces");
+    };
+  }
 }
-function deleteSpace(id){
-  if(!confirm("Delete this booth?"))return;
-  write(KEY_SPACES,read(KEY_SPACES).filter(s=>s.id!==id&&s.organizerId!==currentUser.id));
+
+function deleteSpace(id) {
+  if (!confirm("Delete this booth?")) return;
+
+  write(KEY_SPACES,read(KEY_SPACES).filter(s =>
+    !(s.id === id && s.organizerId === currentUser.id)
+  ));
+
+  notify("Booth deleted.");
   navigate("spaces");
 }
-function renderRequirements(host){
-  const events=read(KEY_EVENTS).filter(e=>e.organizerId===currentUser.id);
-  const reqs=read("popuphubRequirements");
-  host.innerHTML=heading("Event Requirements","Set documents and participation conditions vendors must meet.")+
-  `<div class="panel"><form id="reqForm" class="form-grid">
-    <div class="form-group"><label>Event *</label><select id="reqEvent" required>${events.map(e=>`<option value="${e.id}">${escapeHTML(e.name)}</option>`).join("")}</select></div>
-    <div class="form-group"><label>Requirement Name *</label><input id="reqName" required placeholder="e.g. Business Permit"></div>
-    <div class="form-group wide"><label>Description / Instructions</label><textarea id="reqDesc" placeholder="Explain what vendors need to submit..."></textarea></div>
-    <div class="form-group"><label>Required?</label><select id="reqRequired"><option value="yes">Mandatory</option><option value="no">Optional</option></select></div>
-    <div class="form-actions wide"><button class="primary-btn" ${events.length?"":"disabled"}>Add Requirement</button></div>
-  </form></div>
-  <div class="panel"><h3>Configured Requirements</h3>${reqs.filter(r=>events.some(e=>e.id===r.eventId)).map(r=>`<div class="info-card"><strong>${escapeHTML(r.name)} · ${r.required?"Mandatory":"Optional"}</strong><p>${escapeHTML(r.description)}</p><button class="action-btn delete-btn" onclick="deleteRequirement('${r.id}')">Remove</button></div>`).join("")||empty("No requirements added","Add event-specific vendor requirements above.")}</div>`;
-  const form=document.getElementById("reqForm");
-  if(form)form.onsubmit=e=>{e.preventDefault();const all=read("popuphubRequirements");all.push({id:"req-"+Date.now(),organizerId:currentUser.id,eventId:document.getElementById("reqEvent").value,name:document.getElementById("reqName").value.trim(),description:document.getElementById("reqDesc").value.trim(),required:document.getElementById("reqRequired").value==="yes"});write("popuphubRequirements",all);notify("Requirement added.");navigate("requirements")};
-}
-function deleteRequirement(id){write("popuphubRequirements",read("popuphubRequirements").filter(r=>r.id!==id));navigate("requirements")}
-function renderOrganizerApplications(host){
-  const apps=read(KEY_APPLICATIONS).filter(a=>a.organizerId===currentUser.id);
-  host.innerHTML=heading("Vendor Applications","Review vendor requests and make application decisions.")+
-  `<div class="panel"><h3>Applications (${apps.length})</h3>${apps.length?`<div class="table-wrap"><table class="data-table"><tr><th>Vendor</th><th>Event</th><th>Business</th><th>Status</th><th>Decision</th></tr>${apps.map(a=>`<tr><td>${escapeHTML(a.vendorName)}</td><td>${escapeHTML(a.eventName)}</td><td>${escapeHTML(a.business)}</td><td>${pill(a.status)}</td><td>${a.status==="Pending"?`<button class="action-btn edit-btn" onclick="decideApplication('${a.id}','Approved')">Approve</button><button class="action-btn delete-btn" onclick="decideApplication('${a.id}','Rejected')">Reject</button>`:"—"}</td></tr>`).join("")}</table></div>`:empty("No vendor applications","Vendor applications will appear here when submitted.")}</div>`;
-}
-function decideApplication(id,status){
-  const all=read(KEY_APPLICATIONS);const app=all.find(a=>a.id===id&&a.organizerId===currentUser.id);if(!app)return;
-  app.status=status;app.reviewedAt=new Date().toISOString();write(KEY_APPLICATIONS,all);notify("Application "+status.toLowerCase()+".");navigate("applications");
-}
-function renderOrganizerPayments(host){
-  const payments=read(KEY_PAYMENTS).filter(p=>p.organizerId===currentUser.id);
-  host.innerHTML=heading("Payment Records","Record and verify payments made outside PopUpHub.")+
-  `<div class="panel"><h3>Record a Payment</h3><form id="paymentForm" class="form-grid">
-    <div class="form-group"><label>Vendor Name *</label><input id="payVendor" required></div>
-    <div class="form-group"><label>Amount (₱) *</label><input id="payAmount" type="number" min="0.01" step="0.01" required></div>
-    <div class="form-group"><label>Payment Method</label><select id="payMethod"><option>Cash</option><option>Bank Transfer</option><option>E-wallet</option><option>Other</option></select></div>
-    <div class="form-group"><label>Reference Number</label><input id="payReference"></div>
-    <div class="form-actions wide"><button class="primary-btn">Save Payment Record</button></div>
-  </form></div>
-  <div class="panel"><h3>Recorded Payments</h3>${payments.length?`<div class="table-wrap"><table class="data-table"><tr><th>Vendor</th><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>${payments.map(p=>`<tr><td>${escapeHTML(p.vendor)}</td><td>₱${Number(p.amount).toLocaleString()}</td><td>${escapeHTML(p.method)}</td><td>${escapeHTML(p.reference)}</td><td>${p.date}</td></tr>`).join("")}</table></div>`:empty("No payment records","Recorded payments will appear here.")}</div>`;
-  document.getElementById("paymentForm").onsubmit=e=>{e.preventDefault();const all=read(KEY_PAYMENTS);all.push({id:"pay-"+Date.now(),organizerId:currentUser.id,vendor:document.getElementById("payVendor").value.trim(),amount:Number(document.getElementById("payAmount").value),method:document.getElementById("payMethod").value,reference:document.getElementById("payReference").value.trim(),date:new Date().toLocaleDateString()});write(KEY_PAYMENTS,all);notify("Payment record saved.");navigate("payments")};
-}
 
-/* VENDOR PAGES */
-function renderVendor(page,host){
-  const apps=read(KEY_APPLICATIONS).filter(a=>a.vendorId===currentUser.id);
-  if(page==="overview"){
-    host.innerHTML=heading("Vendor Dashboard","Welcome, "+escapeHTML(currentUser.name)+". Manage your business and event applications.")+
-    `<div class="stats">${stat("My Applications",apps.length,"📋","var(--blue)")}${stat("Approved",apps.filter(a=>a.status==="Approved").length,"✅","var(--mint)")}${stat("Pending",apps.filter(a=>a.status==="Pending").length,"⏳","var(--yellow)")}${stat("Rejected",apps.filter(a=>a.status==="Rejected").length,"✕","var(--pink)")}</div>
-    <div class="panel"><h3>Getting Started</h3><p style="font-size:13px;color:var(--muted);line-height:1.8">Complete your business profile, browse available events, and submit an application to request a booth.</p><br><button class="primary-btn" onclick="navigate('events')">Browse Available Events</button></div>
-    <div class="panel"><h3>Recent Applications</h3>${applicationTable(apps)}</div>`;
-  }else if(page==="profile"){
-    host.innerHTML=heading("My Business Profile","Maintain your vendor and business information.")+
-    `<div class="panel"><form id="profileForm" class="form-grid">
-    <div class="form-group"><label>Full Name</label><input id="profileName" value="${escapeHTML(currentUser.name)}" required></div>
-    <div class="form-group"><label>Business Name</label><input id="profileBusiness" value="${escapeHTML(currentUser.business)}" required></div>
-    <div class="form-group"><label>Email</label><input value="${escapeHTML(currentUser.email)}" disabled></div>
-    <div class="form-group"><label>Business Type</label><input id="profileType" value="${escapeHTML(currentUser.businessType||"")}" placeholder="e.g. Food, Clothing, Crafts"></div>
-    <div class="form-group wide"><label>Business Description / Products</label><textarea id="profileDescription">${escapeHTML(currentUser.description||"")}</textarea></div>
-    <div class="form-actions wide"><button class="primary-btn">Save Profile</button></div></form></div>`;
-    document.getElementById("profileForm").onsubmit=e=>{e.preventDefault();currentUser.name=document.getElementById("profileName").value.trim();currentUser.business=document.getElementById("profileBusiness").value.trim();currentUser.businessType=document.getElementById("profileType").value.trim();currentUser.description=document.getElementById("profileDescription").value.trim();updateUser(currentUser);write(KEY_SESSION,currentUser);notify("Business profile updated.");navigate("profile")};
-  }else if(page==="events"){
-    const events=read(KEY_EVENTS).filter(e=>e.status==="Open"&&e.deadline>=new Date().toISOString().slice(0,10));
-    host.innerHTML=heading("Browse Events","Discover events currently accepting vendor applications.")+
-    (events.length?events.map(e=>`<div class="panel"><h3>${escapeHTML(e.name)}</h3><p style="font-size:12px;color:var(--muted);line-height:1.8">${escapeHTML(e.description)}<br>📍 ${escapeHTML(e.location)}<br>📅 ${e.startDate} to ${e.endDate}<br>Application deadline: ${e.deadline}</p><br><button class="primary-btn" onclick="applyEvent('${e.id}')">Apply for this Event</button></div>`).join(""):empty("No open events right now","Check again when organizers publish new events."));
-  }else if(page==="applications"){
-    host.innerHTML=heading("My Applications","Track the status of your submitted event applications.")+`<div class="panel"><h3>Application History</h3>${applicationTable(apps)}</div>`;
-  }else if(page==="payments"){
-    const payments=read(KEY_PAYMENTS).filter(p=>p.vendorEmail===currentUser.email);
-    host.innerHTML=heading("Payments & History","View payment records associated with your vendor account.")+
-    `<div class="panel"><h3>Payment Records</h3>${payments.length?`<div class="table-wrap"><table class="data-table"><tr><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>${payments.map(p=>`<tr><td>₱${Number(p.amount).toLocaleString()}</td><td>${escapeHTML(p.method)}</td><td>${escapeHTML(p.reference)}</td><td>${p.date}</td></tr>`).join("")}</table></div>`:empty("No payment records yet","Your organizer's recorded payment information will appear here once linked to your application.")}</div>`;
+function renderRequirements(host) {
+  const events = read(KEY_EVENTS).filter(e => e.organizerId === currentUser.id);
+  const reqs = read("popuphubRequirements");
+
+  host.innerHTML =
+    heading("Event Requirements","Set documents and participation conditions vendors must meet.") +
+    `
+    <div class="panel">
+      <form id="reqForm" class="form-grid">
+        <div class="form-group">
+          <label>Event *</label>
+          <select id="reqEvent" required>
+            ${events.map(e => `<option value="${e.id}">${escapeHTML(e.name)}</option>`).join("")}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Requirement Name *</label>
+          <input id="reqName" required placeholder="e.g. Business Permit">
+        </div>
+
+        <div class="form-group wide">
+          <label>Description / Instructions</label>
+          <textarea id="reqDesc" placeholder="Explain what vendors need to submit..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Required?</label>
+          <select id="reqRequired">
+            <option value="yes">Mandatory</option>
+            <option value="no">Optional</option>
+          </select>
+        </div>
+
+        <div class="form-actions wide">
+          <button class="primary-btn" ${events.length ? "" : "disabled"}>Add Requirement</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h3>Configured Requirements</h3>
+      ${
+        reqs.filter(r => events.some(e => e.id === r.eventId)).map(r => `
+          <div class="info-card">
+            <strong>${escapeHTML(r.name)} · ${r.required ? "Mandatory" : "Optional"}</strong>
+            <p>${escapeHTML(r.description)}</p>
+            <button class="action-btn delete-btn" onclick="deleteRequirement('${r.id}')">Remove</button>
+          </div>
+        `).join("") || empty("No requirements added","Add event-specific vendor requirements above.")
+      }
+    </div>
+    `;
+
+  const form = document.getElementById("reqForm");
+
+  if (form && events.length) {
+    form.onsubmit = e => {
+      e.preventDefault();
+
+      const all = read("popuphubRequirements");
+
+      all.push({
+        id:"req-" + Date.now(),
+        organizerId:currentUser.id,
+        eventId:document.getElementById("reqEvent").value,
+        name:document.getElementById("reqName").value.trim(),
+        description:document.getElementById("reqDesc").value.trim(),
+        required:document.getElementById("reqRequired").value === "yes"
+      });
+
+      write("popuphubRequirements",all);
+      notify("Requirement added.");
+      navigate("requirements");
+    };
   }
 }
-function applicationTable(apps){
-  if(!apps.length)return empty("No applications yet","Your submitted applications will appear here.");
-  return `<div class="table-wrap"><table class="data-table"><tr><th>Event</th><th>Business</th><th>Submitted</th><th>Status</th></tr>${apps.map(a=>`<tr><td>${escapeHTML(a.eventName)}</td><td>${escapeHTML(a.business)}</td><td>${a.date}</td><td>${pill(a.status)}</td></tr>`).join("")}</table></div>`;
-}
-function applyEvent(eventId){
-  const event=read(KEY_EVENTS).find(e=>e.id===eventId);if(!event)return;
-  const all=read(KEY_APPLICATIONS);
-  if(all.some(a=>a.eventId===eventId&&a.vendorId===currentUser.id)){notify("You already applied to this event.");return}
-  const reqs=read("popuphubRequirements").filter(r=>r.eventId===eventId);
-  const missing=reqs.filter(r=>r.required);
-  if(missing.length){notify("This event has document requirements. The document submission feature will be added next.");return}
-  all.push({id:"app-"+Date.now(),eventId,organizerId:event.organizerId,vendorId:currentUser.id,vendorName:currentUser.name,vendorEmail:currentUser.email,business:currentUser.business,eventName:event.name,status:"Pending",date:new Date().toLocaleDateString()});
-  write(KEY_APPLICATIONS,all);notify("Application submitted.");navigate("applications");
+
+function deleteRequirement(id) {
+  write("popuphubRequirements",read("popuphubRequirements").filter(r =>
+    !(r.id === id && r.organizerId === currentUser.id)
+  ));
+
+  navigate("requirements");
 }
 
-/* ADMIN PAGES */
-function renderAdmin(page,host){
-  if(page==="overview"){
-    const users=read(KEY_USERS);
-    host.innerHTML=heading("System Administration","Manage PopUpHub accounts and system records.")+
-    `<div class="stats">${stat("Total Accounts",users.length,"👥","var(--blue)")}${stat("Vendors",users.filter(u=>u.role==="vendor").length,"🏪","var(--mint)")}${stat("Organizers",users.filter(u=>u.role==="organizer").length,"📅","var(--lavender)")}${stat("Events",read(KEY_EVENTS).length,"📋","var(--peach)")}</div>
-    <div class="panel"><h3>Administrator Responsibilities</h3><p style="font-size:13px;color:var(--muted);line-height:1.9">Manage user accounts, assign account roles, review system records, and maintain administrative settings. Organizer and vendor workspaces remain separate.</p><br><button class="primary-btn" onclick="navigate('accounts')">Manage User Accounts</button></div>`;
-  }else if(page==="accounts"){
-    const users=read(KEY_USERS);
-    host.innerHTML=heading("User Accounts","Review registered vendors and create organizer accounts.")+
-    `<div class="panel"><h3>Create Organizer Account</h3><form id="organizerForm" class="form-grid">
-    <div class="form-group"><label>Full Name *</label><input id="newOrgName" required></div>
-    <div class="form-group"><label>Email *</label><input id="newOrgEmail" type="email" required></div>
-    <div class="form-group"><label>Temporary Password *</label><input id="newOrgPassword" type="password" minlength="6" required></div>
-    <div class="form-actions wide"><button class="primary-btn">Create Organizer</button></div></form></div>
-    <div class="panel"><h3>Registered Accounts (${users.length})</h3>${users.length?`<div class="table-wrap"><table class="data-table"><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th></tr>${users.map(u=>`<tr><td>${escapeHTML(u.name)}</td><td>${escapeHTML(u.email)}</td><td>${escapeHTML(u.role)}</td><td>${u.createdAt?new Date(u.createdAt).toLocaleDateString():"Demo"}</td></tr>`).join("")}</table></div>`:empty("No accounts","Registered accounts will appear here.")}</div>`;
-    document.getElementById("organizerForm").onsubmit=e=>{e.preventDefault();const all=read(KEY_USERS),email=document.getElementById("newOrgEmail").value.trim().toLowerCase();if(all.some(u=>u.email===email)){notify("An account with this email already exists.");return}all.push({id:"user-"+Date.now(),name:document.getElementById("newOrgName").value.trim(),email,password:document.getElementById("newOrgPassword").value,role:"organizer",createdAt:new Date().toISOString()});write(KEY_USERS,all);notify("Organizer account created.");navigate("accounts")};
-  }else if(page==="settings"){
-    host.innerHTML=heading("System Settings","Prototype information and administrator access.")+
-    `<div class="panel"><h3>PopUpHub Prototype</h3><p style="font-size:13px;color:var(--muted);line-height:1.8">This version uses browser LocalStorage for demonstration. It does not provide secure production authentication, shared multi-device records, or server-side access control.</p></div>`;
+function renderOrganizerApplications(host) {
+  const apps = read(KEY_APPLICATIONS).filter(a => a.organizerId === currentUser.id);
+
+  host.innerHTML =
+    heading("Vendor Applications","Review vendor requests and make application decisions.") +
+    `
+    <div class="panel">
+      <h3>Applications (${apps.length})</h3>
+
+      ${apps.length ? `
+        <div class="table-wrap">
+          <table class="data-table">
+            <tr><th>Vendor</th><th>Event</th><th>Business</th><th>Status</th><th>Decision</th></tr>
+            ${apps.map(a => `
+              <tr>
+                <td>${escapeHTML(a.vendorName)}</td>
+                <td>${escapeHTML(a.eventName)}</td>
+                <td>${escapeHTML(a.business)}</td>
+                <td>${pill(a.status)}</td>
+                <td>
+                  ${a.status === "Pending" ? `
+                    <button class="action-btn edit-btn" onclick="decideApplication('${a.id}','Approved')">Approve</button>
+                    <button class="action-btn delete-btn" onclick="decideApplication('${a.id}','Rejected')">Reject</button>
+                  ` : "—"}
+                </td>
+              </tr>
+            `).join("")}
+          </table>
+        </div>
+      ` : empty("No vendor applications","Vendor applications will appear here when submitted.")}
+    </div>
+    `;
+}
+
+function decideApplication(id,status) {
+  const all = read(KEY_APPLICATIONS);
+
+  const app = all.find(a =>
+    a.id === id && a.organizerId === currentUser.id
+  );
+
+  if (!app) return;
+
+  app.status = status;
+  app.reviewedAt = new Date().toISOString();
+
+  write(KEY_APPLICATIONS,all);
+  notify("Application " + status.toLowerCase() + ".");
+  navigate("applications");
+}
+
+function renderOrganizerPayments(host) {
+  const payments = read(KEY_PAYMENTS).filter(p => p.organizerId === currentUser.id);
+
+  host.innerHTML =
+    heading("Payment Records","Record and verify payments made outside PopUpHub.") +
+    `
+    <div class="panel">
+      <h3>Record a Payment</h3>
+
+      <form id="paymentForm" class="form-grid">
+        <div class="form-group">
+          <label>Vendor Name *</label>
+          <input id="payVendor" required>
+        </div>
+
+        <div class="form-group">
+          <label>Amount (₱) *</label>
+          <input id="payAmount" type="number" min="0.01" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="payMethod">
+            <option>Cash</option>
+            <option>Bank Transfer</option>
+            <option>E-wallet</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Reference Number</label>
+          <input id="payReference">
+        </div>
+
+        <div class="form-actions wide">
+          <button class="primary-btn">Save Payment Record</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="panel">
+      <h3>Recorded Payments</h3>
+
+      ${payments.length ? `
+        <div class="table-wrap">
+          <table class="data-table">
+            <tr><th>Vendor</th><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>
+            ${payments.map(p => `
+              <tr>
+                <td>${escapeHTML(p.vendor)}</td>
+                <td>₱${Number(p.amount).toLocaleString()}</td>
+                <td>${escapeHTML(p.method)}</td>
+                <td>${escapeHTML(p.reference)}</td>
+                <td>${p.date}</td>
+              </tr>
+            `).join("")}
+          </table>
+        </div>
+      ` : empty("No payment records","Recorded payments will appear here.")}
+    </div>
+    `;
+
+  document.getElementById("paymentForm").onsubmit = e => {
+    e.preventDefault();
+
+    const all = read(KEY_PAYMENTS);
+
+    all.push({
+      id:"pay-" + Date.now(),
+      organizerId:currentUser.id,
+      vendor:document.getElementById("payVendor").value.trim(),
+      amount:Number(document.getElementById("payAmount").value),
+      method:document.getElementById("payMethod").value,
+      reference:document.getElementById("payReference").value.trim(),
+      date:new Date().toLocaleDateString()
+    });
+
+    write(KEY_PAYMENTS,all);
+    notify("Payment record saved.");
+    navigate("payments");
+  };
+}
+
+/* VENDOR DASHBOARD */
+
+function renderVendor(page,host) {
+  const apps = read(KEY_APPLICATIONS).filter(a => a.vendorId === currentUser.id);
+
+  if (page === "overview") {
+    host.innerHTML =
+      heading("Vendor Dashboard","Welcome, " + escapeHTML(currentUser.name) + ". Manage your business and event applications.") +
+      `
+      <div class="stats">
+        ${stat("My Applications",apps.length,"📋","var(--blue)")}
+        ${stat("Approved",apps.filter(a=>a.status==="Approved").length,"✅","var(--mint)")}
+        ${stat("Pending",apps.filter(a=>a.status==="Pending").length,"⏳","var(--yellow)")}
+        ${stat("Rejected",apps.filter(a=>a.status==="Rejected").length,"✕","var(--pink)")}
+      </div>
+
+      <div class="panel">
+        <h3>Getting Started</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.8">
+          Complete your business profile, browse available events, and submit an application to request a booth.
+        </p>
+        <br>
+        <button class="primary-btn" onclick="navigate('events')">Browse Available Events</button>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Applications</h3>
+        ${applicationTable(apps)}
+      </div>
+      `;
+  }
+
+  else if (page === "profile") {
+    host.innerHTML =
+      heading("My Business Profile","Maintain your vendor and business information.") +
+      `
+      <div class="panel">
+        <form id="profileForm" class="form-grid">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input id="profileName" value="${escapeHTML(currentUser.name)}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Business Name</label>
+            <input id="profileBusiness" value="${escapeHTML(currentUser.business)}" required>
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input value="${escapeHTML(currentUser.email)}" disabled>
+          </div>
+
+          <div class="form-group">
+            <label>Business Type</label>
+            <input id="profileType" value="${escapeHTML(currentUser.businessType)}" placeholder="e.g. Food, Clothing, Crafts">
+          </div>
+
+          <div class="form-group wide">
+            <label>Business Description / Products</label>
+            <textarea id="profileDescription">${escapeHTML(currentUser.description)}</textarea>
+          </div>
+
+          <div class="form-actions wide">
+            <button class="primary-btn">Save Profile</button>
+          </div>
+        </form>
+      </div>
+      `;
+
+    document.getElementById("profileForm").onsubmit = e => {
+      e.preventDefault();
+
+      currentUser.name = document.getElementById("profileName").value.trim();
+      currentUser.business = document.getElementById("profileBusiness").value.trim();
+      currentUser.businessType = document.getElementById("profileType").value.trim();
+      currentUser.description = document.getElementById("profileDescription").value.trim();
+
+      updateUser(currentUser);
+      write(KEY_SESSION,currentUser);
+
+      notify("Business profile updated.");
+      navigate("profile");
+    };
+  }
+
+  else if (page === "events") {
+    const events = read(KEY_EVENTS).filter(e =>
+      e.status === "Open" &&
+      e.deadline >= new Date().toISOString().slice(0,10)
+    );
+
+    host.innerHTML =
+      heading("Browse Events","Discover events currently accepting vendor applications.") +
+      (
+        events.length
+        ? events.map(e => `
+          <div class="panel">
+            <h3>${escapeHTML(e.name)}</h3>
+            <p style="font-size:12px;color:var(--muted);line-height:1.8">
+              ${escapeHTML(e.description)}<br>
+              📍 ${escapeHTML(e.location)}<br>
+              📅 ${e.startDate} to ${e.endDate}<br>
+              Application deadline: ${e.deadline}
+            </p>
+            <br>
+            <button class="primary-btn" onclick="applyEvent('${e.id}')">Apply for this Event</button>
+          </div>
+        `).join("")
+        : empty("No open events right now","Check again when organizers publish new events.")
+      );
+  }
+
+  else if (page === "applications") {
+    host.innerHTML =
+      heading("My Applications","Track the status of your submitted event applications.") +
+      `<div class="panel"><h3>Application History</h3>${applicationTable(apps)}</div>`;
+  }
+
+  else if (page === "payments") {
+    const payments = read(KEY_PAYMENTS).filter(p =>
+      p.vendorEmail === currentUser.email
+    );
+
+    host.innerHTML =
+      heading("Payments & History","View payment records associated with your vendor account.") +
+      `
+      <div class="panel">
+        <h3>Payment Records</h3>
+        ${
+          payments.length
+          ? `
+            <div class="table-wrap">
+              <table class="data-table">
+                <tr><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>
+                ${payments.map(p => `
+                  <tr>
+                    <td>₱${Number(p.amount).toLocaleString()}</td>
+                    <td>${escapeHTML(p.method)}</td>
+                    <td>${escapeHTML(p.reference)}</td>
+                    <td>${p.date}</td>
+                  </tr>
+                `).join("")}
+              </table>
+            </div>
+          `
+          : empty("No payment records yet","Payment records will appear here when associated with your vendor account.")
+        }
+      </div>
+      `;
   }
 }
-function updateUser(updated){
-  const all=read(KEY_USERS),index=all.findIndex(u=>u.id===updated.id);
-  if(index>=0){all[index]={...all[index],...updated};write(KEY_USERS,all)}
+
+function applicationTable(apps) {
+  if (!apps.length) {
+    return empty("No applications yet","Your submitted applications will appear here.");
+  }
+
+  return `
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Event</th><th>Business</th><th>Submitted</th><th>Status</th></tr>
+        ${apps.map(a => `
+          <tr>
+            <td>${escapeHTML(a.eventName)}</td>
+            <td>${escapeHTML(a.business)}</td>
+            <td>${a.date}</td>
+            <td>${pill(a.status)}</td>
+          </tr>
+        `).join("")}
+      </table>
+    </div>
+  `;
 }
-function seedDemoAccounts(){
-  const users=read(KEY_USERS);
-  const demos=[
-    {id:"demo-organizer",name:"Demo Organizer",email:"organizer@popuphub.demo",password:"organizer123",role:"organizer"},
-    {id:"demo-admin",name:"System Administrator",email:"admin@popuphub.demo",password:"admin12345",role:"admin"}
+
+function applyEvent(eventId) {
+  const event = read(KEY_EVENTS).find(e => e.id === eventId);
+
+  if (!event) return;
+
+  const all = read(KEY_APPLICATIONS);
+
+  if (all.some(a => a.eventId === eventId && a.vendorId === currentUser.id)) {
+    notify("You already applied to this event.");
+    return;
+  }
+
+  const requirements = read("popuphubRequirements").filter(r =>
+    r.eventId === eventId && r.required
+  );
+
+  if (requirements.length) {
+    notify("This event has required documents. Document submission will be added in the next development stage.");
+    return;
+  }
+
+  all.push({
+    id:"app-" + Date.now(),
+    eventId,
+    organizerId:event.organizerId,
+    vendorId:currentUser.id,
+    vendorName:currentUser.name,
+    vendorEmail:currentUser.email,
+    business:currentUser.business,
+    eventName:event.name,
+    status:"Pending",
+    date:new Date().toLocaleDateString()
+  });
+
+  write(KEY_APPLICATIONS,all);
+  notify("Application submitted.");
+  navigate("applications");
+}
+
+/* SYSTEM ADMINISTRATOR */
+
+function renderAdmin(page,host) {
+  if (page === "overview") {
+    const users = read(KEY_USERS);
+
+    host.innerHTML =
+      heading("System Administration","Manage PopUpHub accounts and system records.") +
+      `
+      <div class="stats">
+        ${stat("Total Accounts",users.length,"👥","var(--blue)")}
+        ${stat("Vendors",users.filter(u=>u.role==="vendor").length,"🏪","var(--mint)")}
+        ${stat("Organizers",users.filter(u=>u.role==="organizer").length,"📅","var(--lavender)")}
+        ${stat("Events",read(KEY_EVENTS).length,"📋","var(--peach)")}
+      </div>
+
+      <div class="panel">
+        <h3>Administrator Responsibilities</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.9">
+          Manage user accounts, assign account roles, review system records, and maintain administrative settings.
+        </p>
+        <br>
+        <button class="primary-btn" onclick="navigate('accounts')">Manage User Accounts</button>
+      </div>
+      `;
+  }
+
+  else if (page === "accounts") {
+    const users = read(KEY_USERS);
+
+    host.innerHTML =
+      heading("User Accounts","Review registered vendors and create organizer accounts.") +
+      `
+      <div class="panel">
+        <h3>Create Organizer Account</h3>
+
+        <form id="organizerForm" class="form-grid">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input id="newOrgName" required>
+          </div>
+
+          <div class="form-group">
+            <label>Email *</label>
+            <input id="newOrgEmail" type="email" required>
+          </div>
+
+          <div class="form-group">
+            <label>Temporary Password *</label>
+            <input id="newOrgPassword" type="password" minlength="6" required>
+          </div>
+
+          <div class="form-actions wide">
+            <button class="primary-btn">Create Organizer</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h3>Registered Accounts (${users.length})</h3>
+
+        ${
+          users.length
+          ? `
+            <div class="table-wrap">
+              <table class="data-table">
+                <tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th></tr>
+                ${users.map(u => `
+                  <tr>
+                    <td>${escapeHTML(u.name)}</td>
+                    <td>${escapeHTML(u.email)}</td>
+                    <td>${escapeHTML(u.role)}</td>
+                    <td>${u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "Demo"}</td>
+                  </tr>
+                `).join("")}
+              </table>
+            </div>
+          `
+          : empty("No accounts","Registered accounts will appear here.")
+        }
+      </div>
+      `;
+
+    document.getElementById("organizerForm").onsubmit = e => {
+      e.preventDefault();
+
+      const all = read(KEY_USERS);
+      const email = document.getElementById("newOrgEmail").value.trim().toLowerCase();
+
+      if (all.some(u => u.email === email)) {
+        notify("An account with this email already exists.");
+        return;
+      }
+
+      all.push({
+        id:"user-" + Date.now(),
+        name:document.getElementById("newOrgName").value.trim(),
+        email,
+        password:document.getElementById("newOrgPassword").value,
+        role:"organizer",
+        createdAt:new Date().toISOString()
+      });
+
+      write(KEY_USERS,all);
+      notify("Organizer account created.");
+      navigate("accounts");
+    };
+  }
+
+  else if (page === "settings") {
+    host.innerHTML =
+      heading("System Settings","Prototype information and administrator access.") +
+      `
+      <div class="panel">
+        <h3>PopUpHub Prototype</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.8">
+          This version uses browser LocalStorage for demonstration. It does not provide secure production authentication, shared multi-device records, or server-side access control.
+        </p>
+      </div>
+      `;
+  }
+}
+
+function updateUser(updated) {
+  const all = read(KEY_USERS);
+  const index = all.findIndex(u => u.id === updated.id);
+
+  if (index >= 0) {
+    all[index] = {...all[index],...updated};
+    write(KEY_USERS,all);
+  }
+}
+
+/* DEMO ACCOUNTS */
+
+function seedDemoAccounts() {
+  const users = read(KEY_USERS);
+
+  const demos = [
+    {
+      id:"demo-organizer",
+      name:"Demo Organizer",
+      email:"organizer@popuphub.demo",
+      password:"organizer123",
+      role:"organizer"
+    },
+    {
+      id:"demo-admin",
+      name:"System Administrator",
+      email:"admin@popuphub.demo",
+      password:"admin12345",
+      role:"admin"
+    }
   ];
-  let changed=false;
-  demos.forEach(d=>{if(!users.some(u=>u.email===d.email)){users.push(d);changed=true}});
-  if(changed)write(KEY_USERS,users);
+
+  let changed = false;
+
+  demos.forEach(demo => {
+    if (!users.some(u => u.email === demo.email)) {
+      users.push(demo);
+      changed = true;
+    }
+  });
+
+  if (changed) write(KEY_USERS,users);
 }
-function openPrivateAdmin(){
-  authRole="admin";authMode="login";renderAuth();
-  history.replaceState(null,"",location.pathname+"#system-access");
+
+function openPrivateAdmin() {
+  authRole = "admin";
+  authMode = "login";
+  renderAuth();
+
+  history.replaceState(null,"",location.pathname + "#system-access");
 }
-function init(){
+
+function init() {
   seedDemoAccounts();
-  const saved=read(KEY_SESSION,null);
-  if(saved&&saved.id){
-    const user=read(KEY_USERS).find(u=>u.id===saved.id);
-    if(user){currentUser={id:user.id,name:user.name,email:user.email,role:user.role,business:user.business||"",businessType:user.businessType||"",description:user.description||""};openApp();return}
+
+  const saved = read(KEY_SESSION,null);
+
+  if (saved && saved.id) {
+    const user = read(KEY_USERS).find(u => u.id === saved.id);
+
+    if (user) {
+      currentUser = {
+        id:user.id,
+        name:user.name,
+        email:user.email,
+        role:user.role,
+        business:user.business || "",
+        businessType:user.businessType || "",
+        description:user.description || ""
+      };
+
+      openApp();
+      return;
+    }
+
     localStorage.removeItem(KEY_SESSION);
   }
-  if(location.hash==="#system-access"){openPrivateAdmin();return}
+
+  if (location.hash === "#system-access") {
+    openPrivateAdmin();
+    return;
+  }
+
   showHome();
 }
-window.addEventListener("hashchange",()=>{
-  if(location.hash==="#system-access"&&!currentUser)openPrivateAdmin();
+
+window.addEventListener("hashchange",() => {
+  if (location.hash === "#system-access" && !currentUser) {
+    openPrivateAdmin();
+  }
 });
+
 init();
 </script>
+
 </body>
 </html>
