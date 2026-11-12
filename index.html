@@ -1,1 +1,844 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PopUpHub | Business Space Management</title>
+
+<style>
+:root {
+  --blue: #dceaf7;
+  --lavender: #e8dff5;
+  --mint: #dcefe5;
+  --peach: #f8e3d9;
+  --yellow: #f8efcf;
+  --pink: #f4dde5;
+  --primary: #718ba5;
+  --dark: #35465a;
+  --muted: #8492a3;
+  --background: #f6f8fb;
+  --white: #ffffff;
+  --border: #e8edf2;
+  --shadow: 0 8px 25px rgba(65,85,110,.07);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: var(--background);
+  color: var(--dark);
+  min-height: 100vh;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+.topbar {
+  height: 76px;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 7%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 23px;
+  font-weight: 800;
+  color: #607f9c;
+  letter-spacing: -.7px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  font-size: 21px;
+}
+
+.top-links {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.top-links button {
+  background: none;
+  border: none;
+  color: #66778a;
+  font-weight: 600;
+}
+
+.top-links button:hover { color: #607f9c; }
+
+.primary-btn {
+  border: none;
+  background: #7894b0;
+  color: white;
+  padding: 13px 22px;
+  border-radius: 11px;
+  font-weight: 700;
+  transition: .2s;
+}
+
+.primary-btn:hover {
+  background: #627f9c;
+  transform: translateY(-2px);
+}
+
+.secondary-btn {
+  border: 1px solid #dce4ed;
+  background: white;
+  color: var(--dark);
+  padding: 12px 20px;
+  border-radius: 11px;
+  font-weight: 600;
+}
+
+.hero {
+  max-width: 1200px;
+  margin: auto;
+  padding: 85px 25px 65px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 30px;
+  background: var(--mint);
+  color: #57816c;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 5vw, 59px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+  margin-bottom: 22px;
+  color: #40566d;
+}
+
+.hero h1 span { color: #829bb5; }
+
+.hero p {
+  color: #7d8b9b;
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 520px;
+  margin-bottom: 30px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-visual {
+  background: var(--lavender);
+  border-radius: 30px;
+  min-height: 360px;
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.preview-card {
+  background: white;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 340px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+.preview-card h3 {
+  margin-bottom: 20px;
+  color: #526b83;
+}
+
+.preview-booths {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.booth {
+  height: 65px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: #61758b;
+}
+
+.b1 { background: var(--blue); }
+.b2 { background: var(--mint); }
+.b3 { background: var(--peach); }
+.b4 { background: var(--yellow); }
+.b5 { background: var(--pink); }
+.b6 { background: var(--lavender); }
+
+.preview-label {
+  margin-top: 17px;
+  color: #8996a4;
+  font-size: 12px;
+}
+
+.section {
+  max-width: 1150px;
+  margin: auto;
+  padding: 35px 25px 75px;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-heading h2 {
+  color: #50677f;
+  font-size: 29px;
+  margin-bottom: 10px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+.feature-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+.feature-card h3 {
+  color: #526b83;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+footer {
+  padding: 25px;
+  background: white;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* LOGIN */
+
+.auth-wrapper {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 35px;
+  box-shadow: var(--shadow);
+}
+
+.auth-card h2 {
+  font-size: 27px;
+  color: #50677f;
+  margin-bottom: 9px;
+}
+
+.auth-subtitle {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 27px;
+}
+
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #596d82;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #e0e7ee;
+  border-radius: 10px;
+  outline: none;
+  background: #fcfdff;
+}
+
+.form-group input:focus {
+  border-color: #91abc5;
+  box-shadow: 0 0 0 3px #dceaf755;
+}
+
+.full-btn { width: 100%; margin-top: 5px; }
+
+.auth-switch {
+  text-align: center;
+  margin-top: 23px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: #6685a5;
+  font-weight: 800;
+}
+
+.back-link {
+  display: block;
+  margin-top: 20px;
+  text-align: center;
+  color: #71869a;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.role-note {
+  background: #f2f6fa;
+  padding: 13px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #71869a;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.hidden { display: none !important; }
+
+.message {
+  font-size: 13px;
+  margin-top: 14px;
+  color: #b45f5f;
+  line-height: 1.5;
+}
+
+/* DEMO DASHBOARD */
+
+.dashboard {
+  min-height: calc(100vh - 76px);
+  display: grid;
+  grid-template-columns: 245px 1fr;
+}
+
+.sidebar {
+  background: white;
+  border-right: 1px solid var(--border);
+  padding: 25px 16px;
+}
+
+.sidebar-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #a1adba;
+  letter-spacing: 1px;
+  padding: 15px 12px;
+}
+
+.side-link {
+  width: 100%;
+  text-align: left;
+  padding: 13px 14px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #718195;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.side-link:hover, .side-link.active {
+  background: var(--blue);
+  color: #536e89;
+}
+
+.dash-content { padding: 35px; min-width: 0; }
+
+.dash-content h1 {
+  font-size: 27px;
+  color: #50677f;
+  margin-bottom: 8px;
+}
+
+.dash-content > p {
+  color: var(--muted);
+  margin-bottom: 28px;
+  font-size: 14px;
+}
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
+}
+
+.stat-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 23px;
+}
+
+.stat-card span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-card h2 {
+  color: #526b83;
+  font-size: 29px;
+  margin-top: 12px;
+}
+
+.dash-panel {
+  margin-top: 22px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.dash-panel h3 {
+  color: #526b83;
+  margin-bottom: 12px;
+}
+
+.dash-panel p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+@media(max-width:800px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 55px;
+    gap: 35px;
+  }
+  .hero-visual { min-height: 300px; }
+  .features { grid-template-columns: 1fr 1fr; }
+  .dashboard { grid-template-columns: 1fr; }
+  .sidebar {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+    padding: 12px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .sidebar-label { display: none; }
+  .side-link { white-space: nowrap; width: auto; margin: 0; }
+}
+
+@media(max-width:550px) {
+  .topbar { padding: 0 18px; height: 66px; }
+  .brand { font-size: 20px; }
+  .top-links { gap: 12px; }
+  .top-links button:not(.primary-btn) { display: none; }
+  .hero { padding: 45px 20px; }
+  .hero h1 { font-size: 39px; }
+  .features { grid-template-columns: 1fr; }
+  .section { padding: 25px 20px 50px; }
+  .auth-card { padding: 25px 20px; }
+  .dash-content { padding: 25px 18px; }
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🏪</div>
+    PopUpHub
+  </div>
+
+  <nav class="top-links" id="topLinks">
+    <button onclick="showHome()">Home</button>
+    <button onclick="showLogin('vendor')">Vendor</button>
+    <button onclick="showLogin('organizer')">Organizer</button>
+    <button class="primary-btn" onclick="showLogin('vendor')">Get Started</button>
+  </nav>
+</header>
+
+<!-- PUBLIC HOMEPAGE -->
+
+<main id="homePage">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">POP-UP BUSINESS MANAGEMENT</span>
+      <h1>Your space.<br>Your business.<br><span>Your opportunity.</span></h1>
+      <p>
+        Discover pop-up business opportunities, manage temporary
+        spaces, and connect vendors with event organizers through
+        one convenient platform.
+      </p>
+
+      <div class="hero-actions">
+        <button class="primary-btn" onclick="showLogin('vendor')">
+          Join as Vendor →
+        </button>
+        <button class="secondary-btn" onclick="showLogin('organizer')">
+          Organizer Login
+        </button>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="preview-card">
+        <h3>Available Booth Spaces</h3>
+        <div class="preview-booths">
+          <div class="booth b1">A-01</div>
+          <div class="booth b2">A-02</div>
+          <div class="booth b3">A-03</div>
+          <div class="booth b4">B-01</div>
+          <div class="booth b5">B-02</div>
+          <div class="booth b6">B-03</div>
+        </div>
+        <div class="preview-label">A simple way to organize your next event.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-heading">
+      <h2>Everything in One Place</h2>
+      <p>Tools to help organizers and vendors work together.</p>
+    </div>
+
+    <div class="features">
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--blue)">🏪</div>
+        <h3>Vendor Management</h3>
+        <p>Create business profiles, submit applications, and monitor your participation status.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--lavender)">📅</div>
+        <h3>Event Management</h3>
+        <p>Create events, configure business spaces, and publish participation requirements.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--mint)">🧩</div>
+        <h3>Booth Allocation</h3>
+        <p>Monitor available booths and manage vendor assignments.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--peach)">📋</div>
+        <h3>Application Review</h3>
+        <p>Review vendor applications and check submitted documents.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--yellow)">💳</div>
+        <h3>Payment Tracking</h3>
+        <p>Record payments and monitor outstanding balances.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-icon" style="background:var(--pink)">📊</div>
+        <h3>Reports & Analytics</h3>
+        <p>View event activity, vendor registrations, booth occupancy, and payment summaries.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<!-- LOGIN PAGE -->
+
+<section id="loginPage" class="auth-wrapper hidden">
+  <div class="auth-card">
+    <h2 id="loginTitle">Welcome Back!</h2>
+    <p class="auth-subtitle" id="loginSubtitle">
+      Log in to your PopUpHub account.
+    </p>
+
+    <div id="registerFields" class="hidden">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input id="registerName" type="text" placeholder="Enter your full name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email Address</label>
+      <input id="email" type="email" placeholder="name@example.com">
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input id="password" type="password" placeholder="Enter your password">
+    </div>
+
+    <div id="loginMessage" class="message"></div>
+
+    <button class="primary-btn full-btn" id="authButton" onclick="handleAuth()">
+      Log In
+    </button>
+
+    <div class="auth-switch" id="authSwitch">
+      Don't have an account?
+      <button class="text-btn" onclick="toggleRegister()">Register</button>
+    </div>
+
+    <div class="back-link" onclick="showHome()">← Back to Homepage</div>
+  </div>
+</section>
+
+<!-- DEMO DASHBOARD -->
+
+<section id="dashboardPage" class="hidden">
+  <div class="dashboard">
+    <aside class="sidebar">
+      <div class="sidebar-label">MAIN MENU</div>
+      <button class="side-link active">▦ Dashboard</button>
+      <button class="side-link">▣ My Profile</button>
+      <button class="side-link">▤ Events</button>
+      <button class="side-link">▦ Applications</button>
+      <button class="side-link">▣ Payments</button>
+      <div class="sidebar-label">ACCOUNT</div>
+      <button class="side-link" onclick="logout()">↪ Log Out</button>
+    </aside>
+
+    <div class="dash-content">
+      <h1 id="dashboardTitle">Welcome to PopUpHub!</h1>
+      <p id="dashboardSubtitle">Your account overview.</p>
+
+      <div class="dash-grid">
+        <div class="stat-card">
+          <span>Account Role</span>
+          <h2 id="accountRole">Vendor</h2>
+        </div>
+        <div class="stat-card">
+          <span>Account Status</span>
+          <h2 style="font-size:20px">Active</h2>
+        </div>
+        <div class="stat-card">
+          <span>Platform</span>
+          <h2 style="font-size:20px">PopUpHub</h2>
+        </div>
+      </div>
+
+      <div class="dash-panel">
+        <h3>Getting Started</h3>
+        <p id="dashboardWelcome">
+          Welcome! Your dashboard is ready.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 PopUpHub. A Pop-Up Business Space and Vendor Management System.
+</footer>
+
+<script>
+let currentRole = "vendor";
+let isRegistering = false;
+
+function showHome() {
+  document.getElementById("homePage").classList.remove("hidden");
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("dashboardPage").classList.add("hidden");
+  document.getElementById("topLinks").classList.remove("hidden");
+}
+
+function showLogin(role) {
+  currentRole = role;
+  isRegistering = false;
+
+  document.getElementById("homePage").classList.add("hidden");
+  document.getElementById("dashboardPage").classList.add("hidden");
+  document.getElementById("loginPage").classList.remove("hidden");
+  document.getElementById("topLinks").classList.add("hidden");
+
+  document.getElementById("loginTitle").textContent =
+    role === "vendor" ? "Vendor Login" : "Organizer Login";
+
+  document.getElementById("loginSubtitle").textContent =
+    role === "vendor"
+      ? "Access your vendor account and manage your business."
+      : "Access your organizer account and manage your events.";
+
+  document.getElementById("registerFields").classList.add("hidden");
+  document.getElementById("authButton").textContent = "Log In";
+  document.getElementById("authSwitch").classList.remove("hidden");
+  document.getElementById("loginMessage").textContent = "";
+  document.getElementById("authSwitch").innerHTML =
+    'Don\\'t have an account? <button class="text-btn" onclick="toggleRegister()">Register</button>';
+}
+
+function toggleRegister() {
+  if (currentRole !== "vendor") return;
+
+  isRegistering = !isRegistering;
+
+  document.getElementById("registerFields").classList.toggle("hidden", !isRegistering);
+  document.getElementById("loginTitle").textContent =
+    isRegistering ? "Create Vendor Account" : "Vendor Login";
+  document.getElementById("loginSubtitle").textContent =
+    isRegistering
+      ? "Register to discover and apply for available business spaces."
+      : "Access your vendor account and manage your business.";
+  document.getElementById("authButton").textContent =
+    isRegistering ? "Create Account" : "Log In";
+  document.getElementById("authSwitch").innerHTML =
+    isRegistering
+      ? 'Already have an account? <button class="text-btn" onclick="toggleRegister()">Log In</button>'
+      : 'Don\\'t have an account? <button class="text-btn" onclick="toggleRegister()">Register</button>';
+  document.getElementById("loginMessage").textContent = "";
+}
+
+function handleAuth() {
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("loginMessage");
+
+  if (!email || !password) {
+    message.textContent = "Please enter your email and password.";
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("popuphubUsers") || "[]");
+
+  if (isRegistering) {
+    const name = document.getElementById("registerName").value.trim();
+
+    if (!name) {
+      message.textContent = "Please enter your full name.";
+      return;
+    }
+
+    if (users.some(user => user.email === email)) {
+      message.textContent = "An account with this email already exists.";
+      return;
+    }
+
+    users.push({ name, email, password, role: "vendor" });
+    localStorage.setItem("popuphubUsers", JSON.stringify(users));
+
+    message.style.color = "#4e8a69";
+    message.textContent = "Account created! You can now log in.";
+    toggleRegister();
+    document.getElementById("email").value = email;
+    return;
+  }
+
+  const user = users.find(
+    item => item.email === email &&
+            item.password === password &&
+            item.role === currentRole
+  );
+
+  if (!user) {
+    message.style.color = "#b45f5f";
+    message.textContent =
+      "Invalid credentials or account type. Please try again.";
+    return;
+  }
+
+  localStorage.setItem("popuphubSession", JSON.stringify({
+    name: user.name,
+    email: user.email,
+    role: user.role
+  }));
+
+  openDashboard(user);
+}
+
+function openDashboard(user) {
+  document.getElementById("homePage").classList.add("hidden");
+  document.getElementById("loginPage").classList.add("hidden");
+  document.getElementById("dashboardPage").classList.remove("hidden");
+
+  document.getElementById("topLinks").classList.add("hidden");
+  document.getElementById("dashboardTitle").textContent =
+    "Welcome, " + user.name + "!";
+  document.getElementById("accountRole").textContent =
+    user.role === "vendor" ? "Vendor" : "Organizer";
+
+  document.getElementById("dashboardSubtitle").textContent =
+    user.role === "vendor"
+      ? "Manage your business and event applications."
+      : "Manage your events, spaces, and vendor activities.";
+
+  document.getElementById("dashboardWelcome").textContent =
+    user.role === "vendor"
+      ? "Start by completing your business profile and exploring available events."
+      : "Start by creating an event and configuring your business spaces.";
+}
+
+function logout() {
+  localStorage.removeItem("popuphubSession");
+  document.getElementById("email").value = "";
+  document.getElementById("password").value = "";
+  showHome();
+}
+</script>
+
+</body>
+</html>
+
