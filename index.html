@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1531,36 +1530,21 @@ function deleteRequirement(id) {
 
 function renderOrganizerApplications(host) {
   const apps = read(KEY_APPLICATIONS).filter(a => a.organizerId === currentUser.id);
-
-  host.innerHTML =
-    heading("Vendor Applications","Review vendor requests and make application decisions.") +
-    `
+  host.innerHTML = heading("Vendor Applications", "Review vendor applications and their submitted documents.") + `
     <div class="panel">
       <h3>Applications (${apps.length})</h3>
-
-      ${apps.length ? `
-        <div class="table-wrap">
-          <table class="data-table">
-            <tr><th>Vendor</th><th>Event</th><th>Business</th><th>Status</th><th>Decision</th></tr>
-            ${apps.map(a => `
-              <tr>
-                <td>${escapeHTML(a.vendorName)}</td>
-                <td>${escapeHTML(a.eventName)}</td>
-                <td>${escapeHTML(a.business)}</td>
-                <td>${pill(a.status)}</td>
-                <td>
-                  ${a.status === "Pending" ? `
-                    <button class="action-btn edit-btn" onclick="decideApplication('${a.id}','Approved')">Approve</button>
-                    <button class="action-btn delete-btn" onclick="decideApplication('${a.id}','Rejected')">Reject</button>
-                  ` : "—"}
-                </td>
-              </tr>
-            `).join("")}
-          </table>
-        </div>
-      ` : empty("No vendor applications","Vendor applications will appear here when submitted.")}
-    </div>
-    `;
+      ${apps.length ? `<div class="table-wrap"><table class="data-table">
+        <tr><th>Vendor</th><th>Business</th><th>Event</th><th>Documents</th><th>Status</th><th>Decision</th></tr>
+        ${apps.map(a => `<tr>
+          <td>${escapeHTML(a.vendorName)}<br><small>${escapeHTML(a.vendorEmail)}</small></td>
+          <td>${escapeHTML(a.business)}</td>
+          <td>${escapeHTML(a.eventName)}</td>
+          <td>${a.documents && a.documents.length ? a.documents.map(d => `<div style="margin-bottom:5px"><a href="${d.dataUrl}" target="_blank" rel="noopener" download="${escapeHTML(d.fileName)}">${escapeHTML(d.requirementName || d.fileName)} ↗</a></div>`).join("") : "No documents submitted"}</td>
+          <td>${pill(a.status)}</td>
+          <td>${a.status === "Pending" ? `<button class="action-btn edit-btn" onclick="decideApplication('${a.id}','Approved')">Approve</button><button class="action-btn delete-btn" onclick="decideApplication('${a.id}','Rejected')">Reject</button>` : "Reviewed"}</td>
+        </tr>`).join("")}
+      </table></div>` : empty("No vendor applications", "Applications will appear here after vendors submit them.")}
+    </div>`;
 }
 
 function decideApplication(id,status) {
@@ -1582,89 +1566,49 @@ function decideApplication(id,status) {
 
 function renderOrganizerPayments(host) {
   const payments = read(KEY_PAYMENTS).filter(p => p.organizerId === currentUser.id);
-
-  host.innerHTML =
-    heading("Payment Records","Record and verify payments made outside PopUpHub.") +
-    `
-    <div class="panel">
-      <h3>Record a Payment</h3>
-
+  host.innerHTML = heading("Payment Records", "Record and verify vendor payments. Use the vendor's registered email to link the record to their account.") + `
+    <div class="panel"><h3>Record a Payment</h3>
       <form id="paymentForm" class="form-grid">
-        <div class="form-group">
-          <label>Vendor Name *</label>
-          <input id="payVendor" required>
-        </div>
-
-        <div class="form-group">
-          <label>Amount (₱) *</label>
-          <input id="payAmount" type="number" min="0.01" step="0.01" required>
-        </div>
-
-        <div class="form-group">
-          <label>Payment Method</label>
-          <select id="payMethod">
-            <option>Cash</option>
-            <option>Bank Transfer</option>
-            <option>E-wallet</option>
-            <option>Other</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Reference Number</label>
-          <input id="payReference">
-        </div>
-
-        <div class="form-actions wide">
-          <button class="primary-btn">Save Payment Record</button>
-        </div>
+        <div class="form-group"><label>Vendor Name *</label><input id="payVendor" required></div>
+        <div class="form-group"><label>Vendor Registered Email *</label><input id="payVendorEmail" type="email" required placeholder="vendor@example.com"></div>
+        <div class="form-group"><label>Amount (₱) *</label><input id="payAmount" type="number" min="0.01" step="0.01" required></div>
+        <div class="form-group"><label>Payment Method</label><select id="payMethod"><option>Cash</option><option>Bank Transfer</option><option>E-wallet</option><option>Other</option></select></div>
+        <div class="form-group"><label>Reference Number</label><input id="payReference"></div>
+        <div class="form-actions wide"><button class="primary-btn">Save Payment Record</button></div>
       </form>
     </div>
-
-    <div class="panel">
-      <h3>Recorded Payments</h3>
-
-      ${payments.length ? `
-        <div class="table-wrap">
-          <table class="data-table">
-            <tr><th>Vendor</th><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>
-            ${payments.map(p => `
-              <tr>
-                <td>${escapeHTML(p.vendor)}</td>
-                <td>₱${Number(p.amount).toLocaleString()}</td>
-                <td>${escapeHTML(p.method)}</td>
-                <td>${escapeHTML(p.reference)}</td>
-                <td>${p.date}</td>
-              </tr>
-            `).join("")}
-          </table>
-        </div>
-      ` : empty("No payment records","Recorded payments will appear here.")}
-    </div>
-    `;
+    <div class="panel"><h3>Recorded Payments</h3>
+      ${payments.length ? `<div class="table-wrap"><table class="data-table">
+        <tr><th>Vendor</th><th>Email</th><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>
+        ${payments.map(p => `<tr><td>${escapeHTML(p.vendor)}</td><td>${escapeHTML(p.vendorEmail || "Not linked")}</td><td>₱${Number(p.amount).toLocaleString()}</td><td>${escapeHTML(p.method)}</td><td>${escapeHTML(p.reference)}</td><td>${escapeHTML(p.date)}</td></tr>`).join("")}
+      </table></div>` : empty("No payment records", "Recorded payments will appear here.")}
+    </div>`;
 
   document.getElementById("paymentForm").onsubmit = e => {
     e.preventDefault();
-
+    const email = document.getElementById("payVendorEmail").value.trim().toLowerCase();
+    const vendorAccount = read(KEY_USERS).find(u => u.email === email && u.role === "vendor");
+    if (!vendorAccount) { notify("No vendor account found with that email."); return; }
+    const amount = Number(document.getElementById("payAmount").value);
+    if (!Number.isFinite(amount) || amount <= 0) { notify("Enter a valid payment amount."); return; }
     const all = read(KEY_PAYMENTS);
-
     all.push({
-      id:"pay-" + Date.now(),
-      organizerId:currentUser.id,
-      vendor:document.getElementById("payVendor").value.trim(),
-      amount:Number(document.getElementById("payAmount").value),
-      method:document.getElementById("payMethod").value,
-      reference:document.getElementById("payReference").value.trim(),
-      date:new Date().toLocaleDateString()
+      id: "pay-" + Date.now(), organizerId: currentUser.id,
+      vendor: document.getElementById("payVendor").value.trim(),
+      vendorEmail: email, vendorId: vendorAccount.id,
+      amount, method: document.getElementById("payMethod").value,
+      reference: document.getElementById("payReference").value.trim(),
+      date: new Date().toLocaleDateString(), status: "Recorded"
     });
-
-    write(KEY_PAYMENTS,all);
-    notify("Payment record saved.");
-    navigate("payments");
+    try {
+      write(KEY_PAYMENTS, all);
+      notify("Payment record saved and linked to the vendor account.");
+      navigate("payments");
+    } catch {
+      notify("Could not save the payment. Browser storage may be full.");
+    }
   };
 }
-
-/* VENDOR DASHBOARD */
 
 function renderVendor(page,host) {
   const apps = read(KEY_APPLICATIONS).filter(a => a.vendorId === currentUser.id);
@@ -1798,13 +1742,14 @@ function renderVendor(page,host) {
           ? `
             <div class="table-wrap">
               <table class="data-table">
-                <tr><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th></tr>
+                <tr><th>Amount</th><th>Method</th><th>Reference</th><th>Date</th><th>Status</th></tr>
                 ${payments.map(p => `
                   <tr>
                     <td>₱${Number(p.amount).toLocaleString()}</td>
                     <td>${escapeHTML(p.method)}</td>
                     <td>${escapeHTML(p.reference)}</td>
-                    <td>${p.date}</td>
+                    <td>${escapeHTML(p.date)}</td>
+                    <td>${pill(p.status || "Recorded")}</td>
                   </tr>
                 `).join("")}
               </table>
@@ -1841,41 +1786,104 @@ function applicationTable(apps) {
 
 function applyEvent(eventId) {
   const event = read(KEY_EVENTS).find(e => e.id === eventId);
+  const today = new Date().toISOString().slice(0,10);
+  if (!event || event.status !== "Open" || (event.deadline && event.deadline < today)) {
+    notify("This event is not accepting applications.");
+    return;
+  }
 
-  if (!event) return;
-
-  const all = read(KEY_APPLICATIONS);
-
-  if (all.some(a => a.eventId === eventId && a.vendorId === currentUser.id)) {
+  const applications = read(KEY_APPLICATIONS);
+  if (applications.some(a => a.eventId === eventId && a.vendorId === currentUser.id)) {
     notify("You already applied to this event.");
     return;
   }
 
-  const requirements = read("popuphubRequirements").filter(r =>
-    r.eventId === eventId && r.required
-  );
+  const requirements = read("popuphubRequirements").filter(r => r.eventId === eventId);
+  const host = document.getElementById("appContent");
 
-  if (requirements.length) {
-    notify("This event has required documents. Document submission will be added in the next development stage.");
-    return;
-  }
+  host.innerHTML = heading("Apply for Event", "Complete your application and upload the event's required documents.") + `
+    <div class="panel">
+      <h3>${escapeHTML(event.name)}</h3>
+      <p style="font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:18px">
+        ${escapeHTML(event.location)}<br>${escapeHTML(event.startDate)} to ${escapeHTML(event.endDate)}<br>Application deadline: ${escapeHTML(event.deadline)}
+      </p>
+      <form id="vendorApplicationForm">
+        ${requirements.length ? requirements.map(r => `
+          <div class="info-card">
+            <strong>${escapeHTML(r.name)} ${r.required ? "(Required)" : "(Optional)"}</strong>
+            <p>${escapeHTML(r.description || "Upload the requested document.")}</p>
+            <input type="file" data-requirement-id="${escapeHTML(r.id)}" data-requirement-name="${escapeHTML(r.name)}" accept=".pdf,.jpg,.jpeg,.png" ${r.required ? "required" : ""}>
+            <small style="display:block;color:var(--muted);margin-top:6px">PDF, JPG, or PNG. Maximum 1 MB per file.</small>
+          </div>
+        `).join("") : empty("No documents required", "You may submit your application directly.")}
+        <div class="form-actions">
+          <button class="primary-btn" type="submit">Submit Application</button>
+          <button class="secondary-btn" type="button" onclick="navigate('events')">Cancel</button>
+        </div>
+      </form>
+    </div>`;
 
-  all.push({
-    id:"app-" + Date.now(),
-    eventId,
-    organizerId:event.organizerId,
-    vendorId:currentUser.id,
-    vendorName:currentUser.name,
-    vendorEmail:currentUser.email,
-    business:currentUser.business,
-    eventName:event.name,
-    status:"Pending",
-    date:new Date().toLocaleDateString()
-  });
+  document.getElementById("vendorApplicationForm").onsubmit = async e => {
+    e.preventDefault();
+    const inputs = [...e.currentTarget.querySelectorAll('input[type="file"]')];
+    const documents = [];
 
-  write(KEY_APPLICATIONS,all);
-  notify("Application submitted.");
-  navigate("applications");
+    for (const input of inputs) {
+      const file = input.files[0];
+      if (!file) {
+        if (input.required) { notify("Please upload every required document."); return; }
+        continue;
+      }
+      const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+      const extensionAllowed = /\.(pdf|jpe?g|png)$/i.test(file.name);
+      if ((file.type && !allowedTypes.includes(file.type)) || !extensionAllowed) {
+        notify("Only PDF, JPG, and PNG files are accepted."); return;
+      }
+      if (file.size > 1024 * 1024) {
+        notify("Each file must be 1 MB or smaller."); return;
+      }
+      try {
+        const dataUrl = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        documents.push({
+          requirementId: input.dataset.requirementId,
+          requirementName: input.dataset.requirementName,
+          fileName: file.name,
+          fileType: file.type,
+          dataUrl
+        });
+      } catch {
+        notify("Could not read the selected document."); return;
+      }
+    }
+
+    const latest = read(KEY_APPLICATIONS);
+    if (latest.some(a => a.eventId === eventId && a.vendorId === currentUser.id)) {
+      notify("You already applied to this event.");
+      navigate("applications");
+      return;
+    }
+
+    latest.push({
+      id: "app-" + Date.now(), eventId, organizerId: event.organizerId,
+      vendorId: currentUser.id, vendorName: currentUser.name,
+      vendorEmail: currentUser.email, business: currentUser.business,
+      eventName: event.name, documents, status: "Pending",
+      date: new Date().toLocaleDateString(), submittedAt: new Date().toISOString()
+    });
+
+    try {
+      write(KEY_APPLICATIONS, latest);
+      notify("Application submitted successfully.");
+      navigate("applications");
+    } catch {
+      notify("Browser storage is full. Please use smaller documents.");
+    }
+  };
 }
 
 /* SYSTEM ADMINISTRATOR */
